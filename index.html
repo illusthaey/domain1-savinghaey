@@ -25,11 +25,43 @@
 
   <hr/>
 
+  <!-- 업무 대시보드 (기본: 접힘) -->
+  <section class="section">
+    <details class="dash-details">
+      <summary class="shot-summary">
+        <span class="local-h2">업무 대시보드</span>
+        <span class="muted local-small"> — 펼치기/접기</span>
+      </summary>
 
+      <hr/>
 
+      <div class="grid two">
+        <div class="card">
+          <h3 class="local-h3 local-tight">빠른 이동</h3>
+
+          <div class="row gap">
+            <a class="btn ghost" href="#efficiency-tools">업무 효율화 도구 모음</a>
+            <a class="btn ghost" href="#assistant-tools">업무 보조 도구 모음</a>
+          </div>
+
+          <p class="muted local-small">아래 섹션으로 스크롤 점프합니다.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="local-h3 local-tight">대시보드에 넣기 좋은 것(예시)</h3>
+          <ul>
+            <li>오늘 할 일 체크리스트</li>
+            <li>자주 쓰는 링크(결재/메일/드라이브 등)</li>
+            <li>오늘 일정/마감</li>
+            <li>빠른 메모</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+  </section>
 
   <!-- 업무 효율화 도구 모음 -->
-  <section class="section">
+  <section class="section" id="efficiency-tools">
     <h2 class="local-h2">업무 효율화 도구 모음</h2>
     <hr/>
 
@@ -41,8 +73,8 @@
     </div>
   </section>
 
-    <!-- 업무 효율화 도구 모음 -->
-  <section class="section">
+  <!-- 업무 보조 도구 모음 -->
+  <section class="section" id="assistant-tools">
     <h2 class="local-h2">업무 보조 도구 모음</h2>
     <hr/>
 
@@ -54,12 +86,10 @@
     </div>
   </section>
 
-  
+</main>
 
-  <script src="/static/disable-copy.js"></script>
+<script src="/static/disable-copy.js"></script>
 <script src="/static/footer.js"></script>
 <script src="/static/global-loader.js?v=1"></script>
-
 </body>
 </html>
-  
