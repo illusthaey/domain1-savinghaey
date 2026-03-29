@@ -1,4 +1,4 @@
-/* 2026.2.25.(수) 오전 3:40 버튼 색상 팔레트 추가*/
+/* 2026.3.5.(목) 오전 7:40 버튼 색상 팔레트 추가*/
 
 * {
   box-sizing: border-box;
@@ -209,6 +209,10 @@ main {
 
 .btn.primary { background: #111; color: #fff; }
 .btn.primary:hover { background: #000; }
+
+
+.btn.black { background: #111; color: #fff; }
+.btn.black:hover { background: #000; }
 
 .btn.ghost { background: #f9fafb; border-color: #d4d4d8; }
 .btn.ghost:hover { background: #eef2ff; }
@@ -719,119 +723,6 @@ body h2 + hr {
   padding: 10px 12px;
 }
 
-/* =========================================================
-   버튼 색상 팔레트 (2026.2.25)
-   ========================================================= */
-
-.btn[class*="pastel-"],
-.btn.paste-pink {
-  border-color: #222;
-  color: #111;
-  transition: background-color 0.15s ease, transform 0.05s ease;
-}
-
-.btn[class*="pastel-"]:hover,
-.btn.paste-pink:hover {
-  transform: translateY(-1px);
-}
-
-.btn[class*="pastel-"]:focus-visible,
-.btn.paste-pink:focus-visible {
-  outline: 2px solid rgba(17, 17, 17, 0.35);
-  outline-offset: 2px;
-}
-
-.btn.pastel-yellow { background: #FFF4B8; }
-.btn.pastel-yellow:hover { background: #FFEFA0; }
-
-.btn.pastel-blue { background: #E6F0FF; }
-.btn.pastel-blue:hover { background: #D7E8FF; }
-
-.btn.paste-pink { background: #FFE4EF; border-color: #222; color: #111; }
-.btn.paste-pink:hover { background: #FFD4E4; }
-.btn.paste-pink:focus-visible{
-  outline: 2px solid rgba(255, 123, 176, 0.55);
-  outline-offset: 2px;
-}
-
-.btn.pastel-mint { background: #DFF7EA; }
-.btn.pastel-mint:hover { background: #CFF2E1; }
-
-.btn.pastel-green { background: #E3F6C9; }
-.btn.pastel-green:hover { background: #D4F0B4; }
-
-.btn.pastel-orange { background: #FFE8D1; }
-.btn.pastel-orange:hover { background: #FFDDBE; }
-
-.btn.pastel-red { background: #FFD7D7; }
-.btn.pastel-red:hover { background: #FFC4C4; }
-
-.btn.pastel-purple { background: #EFE2FF; }
-.btn.pastel-purple:hover { background: #E3D1FF; }
-
-.btn.pastel-grey { background: #F3F4F6; border-color: #D4D4D8; }
-.btn.pastel-grey:hover { background: #E9EAEE; }
-
-.btn.pastel-teal { background: #D9F5F3; }
-.btn.pastel-teal:hover { background: #C7F0ED; }
-
-:root{
-  /* 원본(진한 파스텔) */
-  --rose-500: #FF5D8F;
-  --coral-500:#FF6B6B;
-  --peach-500:#FF9F68;
-  --apricot-500:#FFB86B;
-  --butter-500:#FFE08A;
-  --amber-500:#FBBF24;
-  --mint-500:#2DD4BF;
-  --seafoam-500:#34D399;
-  --pistachio-500:#A7F3A0;
-  --sky-500:#38BDF8;
-  --ice-500:#60A5FA;
-  --periwinkle-500:#7C83FF;
-  --lavender-500:#A78BFA;
-  --grape-500:#C084FC;
-  --lilac-500:#E879F9;
-
-  /* 어두운 버전(텍스트용) */
-  --rose-700: #C74970;
-  --coral-700:#C25151;
-  --peach-700:#A66744;
-  --apricot-700:#996E40;
-  --butter-700:#857448;
-  --amber-700:#947115;
-  --mint-700:#1C8376;
-  --seafoam-700:#218560;
-  --pistachio-700:#577E53;
-  --sky-700:#257DA4;
-  --ice-700:#4678B6;
-  --periwinkle-700:#666BD1;
-  --lavender-700:#7D68BC;
-  --grape-700:#8E62BA;
-  --lilac-700:#A757B3;
-}
-
-/* 유틸리티 클래스(텍스트 색) */
-.text-rose { color: var(--rose-700); }
-.text-sky  { color: var(--sky-700); }
-.text-mint { color: var(--mint-700); }
-.text-grape{ color: var(--grape-700); }
-
-/* 강조는 별도로 */
-.accent { font-weight: 700; }
-
-.badge-rose{
-  background: var(--rose-500);
-  color: var(--rose-700);
-  padding: .2em .6em;
-  border-radius: 999px;
-  font-weight: 700;
-}
-
-.table-wrap .simple-table th,
-.table-wrap .simple-table td {
-  text-align: center;
-}
 
 /* ===============================
    이미지 클릭 확대/축소 (CSS-only)
@@ -1053,476 +944,791 @@ section[id]{
 }
 
 /* =========================================================
-   🟣🟦 LIGHT CYBERPUNK (WHITE BASE) — THEME OVERRIDES
-   - 흰 배경 유지 + 네온 + HUD 질감
-   - 기존 구조 유지, CSS로만 분위기 변경
+   ✅ 레트로 감성 + 직관성 업그레이드 (2026.3.3)
+   - footer.js에서 html[data-theme] 값을 "retro" / "classic" 으로 토글
+   - 기본값은 "retro"
    ========================================================= */
 
-:root{
-  --cp-bg0:#ffffff;
-  --cp-bg1:#f6f8ff;
-
-  --cp-text:#0b1020;
-  --cp-text-soft: rgba(11,16,32,0.88);
-  --cp-muted: rgba(11,16,32,0.62);
-
-  --cp-cyan:#00D9FF;
-  --cp-pink:#FF2BD6;
-  --cp-purple:#7A5CFF;
-  --cp-yellow:#FFD84D;
-  --cp-green:#3DFF98;
-  --cp-red:#FF3B5C;
-
-  --cp-surface: rgba(255,255,255,0.78);
-  --cp-surface2: rgba(248,250,255,0.92);
-
-  --cp-border: rgba(0,217,255,0.34);
-  --cp-border-strong: rgba(255,43,214,0.40);
-
-  --cp-shadow: rgba(15, 23, 42, 0.12);
-  --cp-shadow2: rgba(15, 23, 42, 0.08);
-
-  --cp-glow-cyan: 0 0 0.9rem rgba(0,217,255,0.22);
-  --cp-glow-pink: 0 0 0.9rem rgba(255,43,214,0.18);
-  --cp-glow-purple: 0 0 0.9rem rgba(122,92,255,0.18);
-
-  --cp-radius: 14px;
-  --cp-radius-sm: 12px;
-
-  --cp-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono","Courier New", monospace;
+/* -------------------------------
+   0) 직관성: 빠른 이동(칩) 현재 위치 표시 (공통)
+   ------------------------------- */
+.chip.is-active,
+.chip[aria-current="location"]{
+  border-color: #111;
+  background: #eef2ff;
 }
 
-/* 브라우저 기본 UI도 라이트로 */
-html{ color-scheme: light; }
+/* 키보드 포커스 가시성(공통) */
+.chip:focus-visible{
+  outline: 2px solid rgba(17, 17, 17, 0.35);
+  outline-offset: 2px;
+}
 
-/* 흰색 기반 + 네온 헤이즈 */
-body,
-body.page-index{
+/* -------------------------------
+   1) 푸터: 테마 토글 UI (공통)
+   ------------------------------- */
+.site-footer .footer-tools{
+  margin-top: 14px;
+}
+.site-footer .theme-switch{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.site-footer .btn.btn-theme{
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+}
+.site-footer .btn.btn-theme.is-active{
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
+.site-footer .footer-hint{
+  margin-top: 8px;
+}
+
+/* =========================================================
+   2) 레트로 테마 (html[data-theme="retro"])
+   - 너무 과하면 업무 사이트에서 피로해지니, '레트로 감성'은 살리고
+     가독성/정확도(실무)를 우선으로 조절
+   ========================================================= */
+
+html[data-theme="retro"]{
+  color-scheme: light;
+}
+
+html[data-theme="retro"] body{
+  /* 색 변수(레트로-문구/종이 느낌) */
+  --retro-bg: #fff5d8;          /* 따뜻한 종이색 */
+  --retro-surface: #fffdf1;     /* 카드 배경 */
+  --retro-surface-2: #ffffff;   /* 버튼/입력 기본 */
+  --retro-ink: #121212;         /* 본문 텍스트 */
+  --retro-muted: #48505c;       /* 설명 텍스트 */
+  --retro-border: #161616;      /* 굵은 라인 */
+  --retro-shadow: rgba(22, 22, 22, 0.55);
+  --retro-focus: rgba(56, 189, 248, 0.55);
+  --retro-accent: #ff5d8f;
+
+  /* 레트로 배경(얇은 그리드 + 잉크 번짐 느낌 라이트 버전) */
   background:
-    radial-gradient(900px 520px at 12% 10%, rgba(255,43,214,0.10), transparent 60%),
-    radial-gradient(1000px 620px at 90% 12%, rgba(0,217,255,0.10), transparent 55%),
-    radial-gradient(980px 680px at 70% 92%, rgba(122,92,255,0.08), transparent 58%),
-    linear-gradient(180deg, var(--cp-bg0), var(--cp-bg1));
-  color: var(--cp-text);
+    linear-gradient(rgba(22,22,22,0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(22,22,22,0.035) 1px, transparent 1px) 0 0 / 22px 22px,
+    radial-gradient(circle at 10% 0%, rgba(255, 184, 107, 0.26), transparent 45%),
+    radial-gradient(circle at 90% 18%, rgba(124, 131, 255, 0.18), transparent 52%),
+    var(--retro-bg);
+
+  color: var(--retro-ink);
+  background-attachment: fixed;
 }
 
-/* 기존 index 흰 배경 고정은 “투명”으로 덮어쓰기(테마 배경 보이게) */
-.page-index{ background: transparent; }
-
-/* HUD 질감: 그리드 + 스캔라인(아주 약하게) */
-body{
-  position: relative;
+/* 본문/보조텍스트 톤 정리 */
+html[data-theme="retro"] body p,
+html[data-theme="retro"] body li,
+html[data-theme="retro"] body div,
+html[data-theme="retro"] body span{
+  color: #1f2937;
+}
+html[data-theme="retro"] body .muted{
+  color: var(--retro-muted);
 }
 
-body::before,
-body::after{
-  content:"";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+/* 헤딩/컨트롤: 모노스페이스로 레트로 감성(본문은 그대로) */
+html[data-theme="retro"] body h1,
+html[data-theme="retro"] body h2,
+html[data-theme="retro"] body h3,
+html[data-theme="retro"] body h4,
+html[data-theme="retro"] body .btn,
+html[data-theme="retro"] body .chip,
+html[data-theme="retro"] body summary,
+html[data-theme="retro"] body th{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", "Apple SD Gothic Neo", "Noto Sans KR", "맑은 고딕", monospace;
+  letter-spacing: -0.01em;
 }
 
-body::before{
-  background:
-    linear-gradient(to right, rgba(0,217,255,0.10) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,43,214,0.07) 1px, transparent 1px);
-  background-size: 52px 52px;
-  opacity: 0.12;
-  mix-blend-mode: multiply;
+html[data-theme="retro"] body h1,
+html[data-theme="retro"] body h2{
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.06);
 }
 
-body::after{
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(11,16,32,0.06),
-    rgba(11,16,32,0.06) 1px,
-    transparent 2px,
-    transparent 9px
-  );
-  opacity: 0.06;
+/* 섹션/카드: 굵은 라인 + 오프셋 섀도(90s 윈도우/잡지 느낌) */
+html[data-theme="retro"] .section,
+html[data-theme="retro"] .card,
+html[data-theme="retro"] .tool-card,
+html[data-theme="retro"] .callout,
+html[data-theme="retro"] .shot-details,
+html[data-theme="retro"] .dl-shot{
+  background: var(--retro-surface);
+  border: 2px solid var(--retro-border);
+  box-shadow: 6px 6px 0 var(--retro-shadow);
 }
 
-/* 오버레이보다 위로 */
-body > *{
-  position: relative;
-  z-index: 1;
+/* 대시보드 summary/접기영역도 살짝 레트로하게 */
+html[data-theme="retro"] .dash-summary,
+html[data-theme="retro"] .shot-summary{
+  background: rgba(255,255,255,0.72);
+  border: 2px solid var(--retro-border);
 }
 
-/* 텍스트 톤 */
-body p,
-body li,
-body div,
-body span{
-  color: var(--cp-text-soft);
+/* 버튼: 눌리는 3D 느낌(과하지 않게) */
+html[data-theme="retro"] .btn{
+  border: 2px solid var(--retro-border);
+  border-radius: 10px;
+  background: var(--retro-surface-2);
+  box-shadow: 4px 4px 0 var(--retro-shadow);
+  transition:
+    transform 0.07s ease,
+    box-shadow 0.07s ease,
+    background-color 0.15s ease,
+    filter 0.15s ease;
 }
 
-body .muted{
-  color: var(--cp-muted) !important;
+html[data-theme="retro"] .btn:hover{
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--retro-shadow);
+  filter: saturate(1.02);
 }
 
-/* 서브타이틀: 터미널 느낌 */
-.subtitle{
-  font-family: var(--cp-mono);
-  letter-spacing: 0.02em;
-  color: var(--cp-muted) !important;
+html[data-theme="retro"] .btn:active{
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--retro-shadow);
 }
 
-/* 헤딩 글로우 */
-body h1, body h2, body h3, body h4{
-  color: var(--cp-text);
-  text-shadow: 0 0 18px rgba(0,217,255,0.08), 0 0 18px rgba(255,43,214,0.06);
+html[data-theme="retro"] .btn.primary{
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
-/* 지원 브라우저에서만 h1 네온 그라디언트 */
-@supports (-webkit-background-clip: text){
-  body h1{
-    background: linear-gradient(90deg, rgba(255,43,214,0.95), rgba(0,217,255,0.90));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: none;
+/* 칩도 동일한 '툭'한 느낌 */
+html[data-theme="retro"] .chip{
+  border: 2px solid var(--retro-border);
+  background: rgba(255,255,255,0.85);
+  box-shadow: 3px 3px 0 var(--retro-shadow);
+}
+
+html[data-theme="retro"] .chip:hover{
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--retro-shadow);
+}
+
+html[data-theme="retro"] .chip.is-active,
+html[data-theme="retro"] .chip[aria-current="location"]{
+  background: rgba(56,189,248,0.18);
+  border-color: var(--retro-border);
+}
+html[data-theme="retro"] .chip.is-active::after,
+html[data-theme="retro"] .chip[aria-current="location"]::after{
+  content: "●";
+  font-size: 0.7em;
+  margin-left: 6px;
+  color: var(--retro-accent);
+}
+
+/* 입력 UI: 종이 위 펜 느낌(테두리 강조) */
+html[data-theme="retro"] input[type="text"],
+html[data-theme="retro"] input[type="number"],
+html[data-theme="retro"] input[type="time"],
+html[data-theme="retro"] input[type="date"],
+html[data-theme="retro"] select,
+html[data-theme="retro"] textarea{
+  border: 2px solid var(--retro-border);
+  background: rgba(255,255,255,0.72);
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,0.06);
+}
+
+html[data-theme="retro"] input:focus,
+html[data-theme="retro"] select:focus,
+html[data-theme="retro"] textarea:focus{
+  outline: 3px solid var(--retro-focus);
+  outline-offset: 2px;
+  border-color: var(--retro-border);
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,0.05);
+}
+
+/* 구분선: 점선으로 레트로 느낌 */
+html[data-theme="retro"] hr{
+  border: 0;
+  border-top: 2px dashed rgba(22,22,22,0.35);
+  opacity: 1;
+}
+
+/* 표: 약간 두꺼운 선 + 헤더 배경 강조 */
+html[data-theme="retro"] .sheetlike th,
+html[data-theme="retro"] .sheetlike td{
+  border-color: rgba(22,22,22,0.35);
+}
+html[data-theme="retro"] .sheetlike th{
+  background: rgba(255, 93, 143, 0.10);
+}
+
+/* 푸터도 카드처럼 보이게 */
+html[data-theme="retro"] .site-footer{
+  background: var(--retro-surface);
+  border-top: 2px solid var(--retro-border);
+}
+
+/* 레트로 모드에서 테마 버튼 active는 포인트 컬러 */
+html[data-theme="retro"] .site-footer .btn.btn-theme.is-active{
+  background: var(--retro-accent);
+  color: #111;
+  border-color: var(--retro-border);
+}
+
+/* 모바일에서 빠른이동을 조금 더 '툴바'처럼 (너무 강하면 피곤하니 약하게) */
+@media (max-width: 640px){
+  html[data-theme="retro"] .quick-nav{
+    position: sticky;
+    top: 8px;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
   }
 }
 
-/* 섹션/카드: 유리판(화이트) */
-.section{
-  border: 1px solid var(--cp-border);
-  border-radius: var(--cp-radius);
-  background: linear-gradient(180deg, var(--cp-surface2), var(--cp-surface));
-  box-shadow: 0 14px 36px var(--cp-shadow);
-  backdrop-filter: blur(6px);
+/* 모바일에서는 fixed 배경이 버벅일 수 있어 스크롤로 */
+@media (max-width: 640px){
+  html[data-theme="retro"] body{
+    background-attachment: scroll;
+  }
 }
 
-.card,
-.tool-card,
-.callout,
-.shot-details{
-  border: 1px solid rgba(0,217,255,0.22);
-  border-radius: var(--cp-radius-sm);
-  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(246,248,255,0.80));
-  box-shadow: 0 10px 26px var(--cp-shadow2);
-  backdrop-filter: blur(5px);
+
+/* ✅ retro 모드: 섹션 카드(.section) 배경만 순백으로 */
+html[data-theme="retro"] .section{
+  background: #fff;
 }
 
-/* 섹션 상단 네온 스트립 */
-.section{
-  position: relative;
-}
-.section::before{
-  content:"";
-  position:absolute;
-  left: 14px;
-  right: 14px;
-  top: 0;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, rgba(255,43,214,0.75), rgba(0,217,255,0.75));
-  opacity: 0.55;
-}
 
-/* ✅ 섹션 제목 좌측 네온 바(직관성 ↑) */
-.section > h2,
-.section > h3{
-  position: relative;
-  padding-left: 14px;
-}
-.section > h2::before,
-.section > h3::before{
-  content:"";
-  position:absolute;
-  left: 0;
-  top: 0.20em;
-  width: 4px;
-  height: 1.15em;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255,43,214,0.78), rgba(0,217,255,0.78));
-  box-shadow: var(--cp-glow-cyan), var(--cp-glow-pink);
-  opacity: 0.70;
-}
+/* =========================================================
+   ✅ retro 모드에서도 버튼 고유 색 유지 (2026.3.20)
+   - style.css 맨 아래에 추가
+   - 기존 버튼 모양(레트로 입체감)은 유지
+   - 버튼별 원래 배경색만 다시 살아나게 함
+   ========================================================= */
 
-/* tool-title도 살짝 HUD 느낌 */
-.tool-title{
-  position: relative;
-  padding-left: 12px;
-}
-.tool-title::before{
-  content:"";
-  position:absolute;
-  left: 0;
-  top: 0.25em;
-  width: 3px;
-  height: 1.05em;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(0,217,255,0.75), rgba(122,92,255,0.70));
-  opacity: 0.65;
-}
-
-/* hr: 네온 라인 */
-hr{
-  border: 0 !important;
-  height: 1px !important;
-  background: linear-gradient(90deg,
-    transparent,
-    rgba(255,43,214,0.55),
-    rgba(0,217,255,0.55),
-    transparent
-  ) !important;
-  opacity: 1 !important;
-}
-
-/* quick-nav도 패널처럼 */
-.quick-nav{
-  background: linear-gradient(180deg, var(--cp-surface2), var(--cp-surface));
-}
-
-/* 칩 */
-.chip{
-  background: rgba(255,255,255,0.85);
-  border-color: rgba(0,217,255,0.34);
-  color: var(--cp-text);
-  box-shadow: inset 0 0 0 1px rgba(255,43,214,0.06);
-}
-.chip:hover{
-  border-color: rgba(255,43,214,0.62);
-  box-shadow: 0 10px 24px rgba(15,23,42,0.10), var(--cp-glow-cyan), var(--cp-glow-pink);
-  background: rgba(255,255,255,0.92);
-}
-
-/* 버튼: 화이트 네온 */
+/* 1) 버튼 색 정보를 변수로 통일 */
 .btn{
-  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(245,248,255,0.92));
-  border-color: rgba(0,217,255,0.42);
-  color: var(--cp-text);
-  text-shadow: 0 0 10px rgba(0,217,255,0.10);
-  box-shadow: 0 10px 22px rgba(15,23,42,0.08);
-  transition: transform 0.06s ease, filter 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  --btn-bg: #fff;
+  --btn-bg-hover: #f3f4f6;
+  --btn-text: #111;
+  --btn-border: #222;
 }
 
-.btn:hover{
-  border-color: rgba(255,43,214,0.62);
-  box-shadow: 0 12px 28px rgba(15,23,42,0.10), var(--cp-glow-cyan), var(--cp-glow-pink);
-  transform: translateY(-1px);
-}
-
-.btn:active{
-  transform: translateY(0px);
-  filter: saturate(1.03) brightness(1.02);
-}
-
-.btn:focus-visible{
-  outline: 2px solid rgba(0,217,255,0.70) !important;
-  outline-offset: 3px !important;
-  box-shadow: var(--cp-glow-cyan);
-}
-
-/* primary: 네온 그라디언트 */
 .btn.primary{
-  background: linear-gradient(90deg, rgba(255,43,214,0.92), rgba(0,217,255,0.86));
-  border-color: rgba(5,16,24,0.14);
-  color: #051018;
-  text-shadow: none;
-  box-shadow:
-    0 14px 34px rgba(255,43,214,0.18),
-    0 14px 34px rgba(0,217,255,0.16);
-}
-.btn.primary:hover{
-  filter: brightness(1.05) saturate(1.06);
+  --btn-bg: #111;
+  --btn-bg-hover: #000;
+  --btn-text: #fff;
+  --btn-border: #111;
 }
 
 .btn.ghost{
-  background: rgba(255,255,255,0.70);
-  border-color: rgba(15,23,42,0.14);
-}
-.btn.ghost:hover{
-  border-color: rgba(0,217,255,0.50);
-}
-
-/* toggle 버튼(회색)도 테마에 맞게 */
-.btn-lightgrey{
-  background: rgba(255,255,255,0.78);
-  border-color: rgba(15,23,42,0.14);
+  --btn-bg: #f9fafb;
+  --btn-bg-hover: #eef2ff;
+  --btn-text: #111;
+  --btn-border: #d4d4d8;
 }
 
-/* 입력 UI */
-input[type="text"],
-input[type="number"],
-input[type="time"],
-input[type="date"],
-select,
-textarea{
-  background: rgba(255,255,255,0.96);
-  border-color: rgba(0,217,255,0.28);
-  color: var(--cp-text);
-  box-shadow: 0 8px 18px rgba(15,23,42,0.06);
+.btn.btn-lightgrey{
+  --btn-bg: #f3f4f6;
+  --btn-bg-hover: #e9eaee;
+  --btn-text: #111;
+  --btn-border: #d4d4d8;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-  border-color: rgba(255,43,214,0.55);
-  box-shadow: var(--cp-glow-pink);
-  background: rgba(255,255,255,0.98);
+.btn[class*="pastel-"],
+.btn.paste-pink{
+  --btn-text: #111;
+  --btn-border: #222;
 }
 
-/* 테이블 */
-.sheetlike{
-  background: rgba(255,255,255,0.96);
-  color: var(--cp-text);
-}
-.sheetlike th,
-.sheetlike td{
-  border-color: rgba(0,217,255,0.18);
-}
-.sheetlike th{
-  background: linear-gradient(90deg, rgba(0,217,255,0.10), rgba(255,43,214,0.07));
+.btn.pastel-yellow{
+  --btn-bg: #FFF4B8;
+  --btn-bg-hover: #FFEFA0;
 }
 
-/* footer/header */
-.site-header{
-  background: rgba(255,255,255,0.78);
-  border-bottom-color: rgba(0,217,255,0.18);
-  backdrop-filter: blur(6px);
-}
-.site-footer{
-  background: rgba(255,255,255,0.78) !important;
-  border-top-color: rgba(0,217,255,0.18) !important;
-  color: rgba(11,16,32,0.62) !important;
-  backdrop-filter: blur(6px);
+.btn.pastel-blue{
+  --btn-bg: #E6F0FF;
+  --btn-bg-hover: #D7E8FF;
 }
 
-/* 스킵 링크 */
-.skip-link{
-  background: linear-gradient(90deg, rgba(255,43,214,0.92), rgba(0,217,255,0.86)) !important;
-  color: #051018 !important;
+.btn.paste-pink{
+  --btn-bg: #FFE4EF;
+  --btn-bg-hover: #FFD4E4;
 }
 
-/* 선택 색 */
-::selection{
-  background: rgba(255,43,214,0.22);
-  color: #051018;
+.btn.pastel-mint{
+  --btn-bg: #DFF7EA;
+  --btn-bg-hover: #CFF2E1;
 }
 
-/* =========================================================
-   ✅ “행동 예측” 아이콘 (CSS만)
-   - 다운로드: ↓
-   - 외부 링크: ↗
-   ========================================================= */
-
-a.btn[download]::after{
-  content: " ↓";
-  font-family: var(--cp-mono);
-  font-weight: 900;
-  opacity: 0.85;
+.btn.pastel-green{
+  --btn-bg: #E3F6C9;
+  --btn-bg-hover: #D4F0B4;
 }
 
-a.btn[href^="http"]:not([download])::after,
-a.btn[target="_blank"]::after{
-  content: " ↗";
-  font-family: var(--cp-mono);
-  font-weight: 900;
-  opacity: 0.80;
+.btn.pastel-orange{
+  --btn-bg: #FFE8D1;
+  --btn-bg-hover: #FFDDBE;
 }
+
+.btn.pastel-red{
+  --btn-bg: #FFD7D7;
+  --btn-bg-hover: #FFC4C4;
+}
+
+.btn.pastel-purple{
+  --btn-bg: #EFE2FF;
+  --btn-bg-hover: #E3D1FF;
+}
+
+.btn.pastel-grey{
+  --btn-bg: #F3F4F6;
+  --btn-bg-hover: #E9EAEE;
+  --btn-text: #111;
+  --btn-border: #D4D4D8;
+}
+
+.btn.pastel-teal{
+  --btn-bg: #D9F5F3;
+  --btn-bg-hover: #C7F0ED;
+}
+
+/* 2) retro에서는 입체감만 적용하고, 색은 각 버튼의 원래 값 유지 */
+html[data-theme="retro"] .btn{
+  background: var(--btn-bg, var(--retro-surface-2));
+  color: var(--btn-text, #111);
+  border-color: var(--btn-border, var(--retro-border));
+}
+
+html[data-theme="retro"] .btn:hover{
+  background: var(--btn-bg-hover, var(--btn-bg, var(--retro-surface-2)));
+}
+
+/* 3) footer의 테마 버튼 active는 기존 포인트 컬러 유지 */
+html[data-theme="retro"] .site-footer .btn.btn-theme.is-active{
+  background: var(--retro-accent);
+  color: #111;
+  border-color: var(--retro-border);
+}
+
 
 /* =========================================================
-   ✅ 상태 배지 (CSS만으로 표시)
-   - 사용 방법: .link-item 또는 .tool-card에 data-status="사용 가능/테스트/미완성" 붙이면 자동 표시
+   페이지 메인 래퍼 표준화 (레이아웃 전용)
    ========================================================= */
 
-.link-item[data-status],
-.tool-card[data-status]{
-  position: relative;
+:root{
+  --page-main-pad-x: 16px;
+  --page-main-pad-top: 24px;
+  --page-main-pad-bottom: 56px;
 }
 
-.link-item[data-status]::after,
-.tool-card[data-status]::after{
-  content: attr(data-status);
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  pointer-events: none;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 0.80rem;
-  font-weight: 900;
-  letter-spacing: 0.01em;
-  font-family: var(--cp-mono);
-  border: 1px solid rgba(15,23,42,0.12);
-  background: rgba(255,255,255,0.78);
-  box-shadow: 0 10px 22px rgba(15,23,42,0.10);
+.page-main{
+  width: 100%;
+  max-width: var(--page-main-max, 880px);
+  margin: 0 auto;
+  padding: var(--page-main-pad-top) var(--page-main-pad-x) var(--page-main-pad-bottom);
 }
 
-/* 배지 색상: OK */
-.link-item[data-status="사용 가능"]::after,
-.link-item[data-status="사용가능"]::after,
-.tool-card[data-status="사용 가능"]::after,
-.tool-card[data-status="사용가능"]::after{
-  border-color: rgba(0,217,255,0.35);
-  background: linear-gradient(90deg, rgba(0,217,255,0.22), rgba(61,255,152,0.18));
+.page-main--compact{ --page-main-max: 720px; }
+.page-main--slim{ --page-main-max: 860px; }
+.page-main--narrow{ --page-main-max: 880px; }
+.page-main--medium{ --page-main-max: 960px; }
+.page-main--wide{ --page-main-max: 1120px; }
+.page-main--xwide{ --page-main-max: 1280px; }
+.page-main--xxwide{ --page-main-max: 1360px; }
+.page-main--full{ --page-main-max: 1800px; }
+
+.page-toolbar,
+.action-row,
+.btnrow{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-/* 배지 색상: TEST */
-.link-item[data-status="테스트"]::after,
-.link-item[data-status="테스트중"]::after,
-.tool-card[data-status="테스트"]::after,
-.tool-card[data-status="테스트중"]::after{
-  border-color: rgba(255,216,77,0.55);
-  background: linear-gradient(90deg, rgba(255,216,77,0.22), rgba(255,159,104,0.16));
+.page-toolbar.end,
+.action-row.end,
+.btnrow.end{
+  justify-content: flex-end;
 }
 
-/* 배지 색상: WIP */
-.link-item[data-status="미완성"]::after,
-.link-item[data-status="미완료"]::after,
-.tool-card[data-status="미완성"]::after,
-.tool-card[data-status="미완료"]::after{
-  border-color: rgba(255,59,92,0.45);
-  background: linear-gradient(90deg, rgba(255,59,92,0.18), rgba(122,92,255,0.14));
-}
-
-/* 배지가 있을 때 버튼 오른쪽 여백 확보(겹침 방지) */
-.link-item[data-status] .btn,
-.tool-card[data-status] .btn{
-  padding-right: 96px;
+.tablewrap{
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 12px 0;
+  padding-bottom: 6px;
 }
 
 @media (max-width: 640px){
-  .link-item[data-status] .btn,
-  .tool-card[data-status] .btn{
-    padding-right: 88px;
+  .page-main{
+    padding: 20px 14px 48px;
+  }
+
+  .section{
+    padding: 16px;
+  }
+
+  .card{
+    padding: 12px 14px;
   }
 }
 
 /* =========================================================
-   모션 민감 사용자 배려 + 인쇄
+   Alien side background layout (2026.3.21 fast-light)
+   - /static/alien.jpg 한 장만 cover + no-repeat
+   - 배경 노출을 더 늘리고, 스크롤 지연을 줄이도록 효과를 가볍게 정리
+   - 공통 트리거: body.alien-side-bg
+   - 공통 래퍼: .alien-page-frame
+   - 래퍼가 없는 페이지는 direct header/main/footer를 fallback 패널로 처리
    ========================================================= */
 
-@media (prefers-reduced-motion: reduce){
-  *{ transition: none !important; }
-  body::before{ opacity: 0.08; }
-  body::after{ opacity: 0.04; }
+body.alien-side-bg{
+  --alien-frame-gutter: clamp(72px, 16vw, 320px);
+  --alien-frame-max: 1500px;
+  --alien-panel-bg: rgba(255, 252, 248, 0.82);
+  --alien-panel-bg-solid: rgba(255, 252, 248, 0.88);
+  --alien-line: rgba(64, 48, 35, 0.12);
+  --alien-shadow-1: rgba(43, 30, 18, 0.11);
+  --alien-shadow-2: rgba(43, 30, 18, 0.05);
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  margin: 0;
+  padding: 0;
+  background: #eae3db;
+}
+
+body.alien-side-bg::before,
+body.alien-side-bg::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+body.alien-side-bg::before{
+  z-index: -2;
+  background: url("/static/alien.jpg") center center / cover no-repeat;
+  background-attachment: scroll;
+  filter: none;
+}
+
+body.alien-side-bg::after{
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,0.02) 0%,
+      rgba(255,255,255,0.00) 16%,
+      rgba(247,243,238,0.06) 34%,
+      rgba(247,243,238,0.14) 50%,
+      rgba(247,243,238,0.06) 66%,
+      rgba(255,255,255,0.00) 84%,
+      rgba(255,255,255,0.02) 100%
+    );
+}
+
+body.alien-side-bg > .alien-page-frame,
+body.alien-side-bg > header.site-header,
+body.alien-side-bg > main,
+body.alien-side-bg > .home-link-wrap,
+body.alien-side-bg > footer.site-footer,
+body.alien-side-bg > .simple-footer{
+  width: calc(100% - var(--alien-frame-gutter));
+  max-width: var(--alien-frame-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body.alien-side-bg > .alien-page-frame{
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(10px, 1.4vw, 18px);
+  padding: clamp(14px, 1.6vw, 22px);
+}
+
+body.alien-side-bg > .alien-page-frame,
+body.alien-side-bg > header.site-header,
+body.alien-side-bg > main,
+body.alien-side-bg > footer.site-footer,
+body.alien-side-bg > .simple-footer{
+  border: 1px solid var(--alien-line);
+  border-radius: clamp(20px, 2.2vw, 30px);
+  background: var(--alien-panel-bg);
+  box-shadow:
+    0 14px 34px var(--alien-shadow-1),
+    0 3px 10px var(--alien-shadow-2);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.alien-side-bg > header.site-header,
+body.alien-side-bg > main,
+body.alien-side-bg > footer.site-footer,
+body.alien-side-bg > .simple-footer{
+  margin-top: clamp(10px, 1.4vw, 18px);
+}
+
+body.alien-side-bg > .alien-page-frame .site-header,
+body.alien-side-bg > .alien-page-frame .topnav,
+body.alien-side-bg > .alien-page-frame .site-footer,
+body.alien-side-bg > .alien-page-frame .simple-footer{
+  background: transparent;
+}
+
+body.alien-side-bg > .alien-page-frame .site-header,
+body.alien-side-bg > header.site-header{
+  border-bottom-color: rgba(64, 48, 35, 0.08);
+}
+
+body.alien-side-bg > .alien-page-frame .site-footer,
+body.alien-side-bg > footer.site-footer{
+  border-top-color: rgba(64, 48, 35, 0.08);
+}
+
+body.alien-side-bg > .alien-page-frame .site-header .shell,
+body.alien-side-bg > .alien-page-frame .topnav .shell,
+body.alien-side-bg > .alien-page-frame header .wrap,
+body.alien-side-bg > .alien-page-frame main .wrap,
+body.alien-side-bg > .alien-page-frame > .shell{
+  max-width: 100%;
+}
+
+body.alien-side-bg .section,
+body.alien-side-bg .card,
+body.alien-side-bg .tool-card,
+body.alien-side-bg .callout,
+body.alien-side-bg .shot-details,
+body.alien-side-bg .dl-shot,
+body.alien-side-bg .dropzone,
+body.alien-side-bg .result,
+body.alien-side-bg .table-scroll,
+body.alien-side-bg .file-list-wrap{
+  box-shadow: 0 6px 16px rgba(43, 30, 18, 0.05);
+}
+
+body.alien-side-bg > .home-link-wrap{
+  margin-top: 16px;
+}
+
+body.alien-side-bg > .home-link-wrap .btn,
+body.alien-side-bg > .home-link-wrap .btn-home{
+  background: rgba(255, 252, 248, 0.86);
+  border-color: rgba(64, 48, 35, 0.18);
+  box-shadow: 0 6px 16px rgba(43, 30, 18, 0.08);
+}
+
+body.alien-side-bg > footer.site-footer,
+body.alien-side-bg > .simple-footer{
+  padding: clamp(14px, 1.8vw, 22px);
+}
+
+body.alien-side-bg > footer.site-footer .shell,
+body.alien-side-bg > .simple-footer{
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+body.alien-side-bg #btnToTop,
+body.alien-side-bg #back-to-top-fab .btn,
+body.alien-side-bg .to-top{
+  box-shadow: 0 8px 18px rgba(43, 30, 18, 0.10);
+}
+
+@media (max-width: 1200px){
+  body.alien-side-bg{
+    --alien-frame-gutter: clamp(28px, 8vw, 120px);
+    --alien-panel-bg: rgba(255, 252, 248, 0.86);
+    --alien-panel-bg-solid: rgba(255, 252, 248, 0.90);
+  }
+}
+
+@media (max-width: 900px){
+  body.alien-side-bg{
+    --alien-frame-gutter: 14px;
+    --alien-panel-bg: rgba(255, 252, 248, 0.92);
+    --alien-panel-bg-solid: rgba(255, 252, 248, 0.95);
+  }
+
+  body.alien-side-bg::after{
+    background:
+      linear-gradient(180deg, rgba(248,244,239,0.08), rgba(238,232,224,0.20));
+  }
+
+  body.alien-side-bg > .alien-page-frame{
+    padding: 12px;
+  }
+
+  body.alien-side-bg > .alien-page-frame,
+  body.alien-side-bg > header.site-header,
+  body.alien-side-bg > main,
+  body.alien-side-bg > footer.site-footer,
+  body.alien-side-bg > .simple-footer{
+    border-radius: 18px;
+  }
 }
 
 @media print{
-  body{ background:#fff !important; }
-  body::before, body::after{ display:none !important; }
-
-  .section, .card, .tool-card, .callout, .shot-details{
-    background:#fff !important;
-    border-color:#ddd !important;
-    box-shadow:none !important;
+  body.alien-side-bg::before,
+  body.alien-side-bg::after{
+    display: none !important;
   }
 
-  .btn{
-    background:#fff !important;
-    color:#000 !important;
-    border-color:#000 !important;
-    box-shadow:none !important;
-    text-shadow:none !important;
+  body.alien-side-bg > .alien-page-frame,
+  body.alien-side-bg > header.site-header,
+  body.alien-side-bg > main,
+  body.alien-side-bg > footer.site-footer,
+  body.alien-side-bg > .simple-footer{
+    background: #fff !important;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
+}
 
-  .link-item[data-status]::after,
-  .tool-card[data-status]::after{
-    display:none !important;
-  }
+
+/* =========================================================
+   제목/서브문구 정렬 공통 고정 (2026.3.22)
+   - h1은 항상 가운데 정렬
+   - <p class="sub">는 항상 왼쪽 정렬
+   - 상세 페이지 개별 inline CSS보다 우선하도록 specificity를 높임
+   ========================================================= */
+
+body h1,
+body .site-header h1,
+body .page-head h1,
+body main.overtime-app h1{
+  text-align: center !important;
+}
+
+body p.sub,
+body .site-header p.sub,
+body .page-head p.sub,
+body main.overtime-app p.sub{
+  text-align: left !important;
+}
+
+
+
+/* =========================================================
+   버튼 색상 팔레트 (2026.2.25)
+   ========================================================= */
+
+.btn[class*="pastel-"],
+.btn.pastel-pink {
+  border-color: #222;
+  color: #111;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn[class*="pastel-"]:hover,
+.btn.pastel-pink:hover {
+  transform: translateY(-1px);
+}
+
+.btn[class*="pastel-"]:focus-visible,
+.btn.pastel-pink:focus-visible {
+  outline: 2px solid rgba(17, 17, 17, 0.35);
+  outline-offset: 2px;
+}
+
+.btn.pastel-yellow { background: #FFF4B8; }
+.btn.pastel-yellow:hover { background: #FFEFA0; }
+
+.btn.pastel-blue { background: #E6F0FF; }
+.btn.pastel-blue:hover { background: #D7E8FF; }
+
+.btn.paste-pink { background: #FFE4EF; border-color: #222; color: #111; }
+.btn.paste-pink:hover { background: #FFD4E4; }
+.btn.paste-pink:focus-visible{
+  outline: 2px solid rgba(255, 123, 176, 0.55);
+  outline-offset: 2px;
+}
+
+.btn.pastel-mint { background: #DFF7EA; }
+.btn.pastel-mint:hover { background: #CFF2E1; }
+
+.btn.pastel-green { background: #E3F6C9; }
+.btn.pastel-green:hover { background: #D4F0B4; }
+
+.btn.pastel-orange { background: #FFE8D1; }
+.btn.pastel-orange:hover { background: #FFDDBE; }
+
+.btn.pastel-red { background: #FFD7D7; }
+.btn.pastel-red:hover { background: #FFC4C4; }
+
+.btn.pastel-purple { background: #EFE2FF; }
+.btn.pastel-purple:hover { background: #E3D1FF; }
+
+.btn.pastel-grey { background: #F3F4F6; border-color: #D4D4D8; }
+.btn.pastel-grey:hover { background: #E9EAEE; }
+
+.btn.pastel-teal { background: #D9F5F3; }
+.btn.pastel-teal:hover { background: #C7F0ED; }
+
+:root{
+  /* 원본(진한 파스텔) */
+  --rose-500: #FF5D8F;
+  --coral-500:#FF6B6B;
+  --peach-500:#FF9F68;
+  --apricot-500:#FFB86B;
+  --butter-500:#FFE08A;
+  --amber-500:#FBBF24;
+  --mint-500:#2DD4BF;
+  --seafoam-500:#34D399;
+  --pistachio-500:#A7F3A0;
+  --sky-500:#38BDF8;
+  --ice-500:#60A5FA;
+  --periwinkle-500:#7C83FF;
+  --lavender-500:#A78BFA;
+  --grape-500:#C084FC;
+  --lilac-500:#E879F9;
+
+  /* 어두운 버전(텍스트용) */
+  --rose-700: #C74970;
+  --coral-700:#C25151;
+  --peach-700:#A66744;
+  --apricot-700:#996E40;
+  --butter-700:#857448;
+  --amber-700:#947115;
+  --mint-700:#1C8376;
+  --seafoam-700:#218560;
+  --pistachio-700:#577E53;
+  --sky-700:#257DA4;
+  --ice-700:#4678B6;
+  --periwinkle-700:#666BD1;
+  --lavender-700:#7D68BC;
+  --grape-700:#8E62BA;
+  --lilac-700:#A757B3;
+}
+
+/* 유틸리티 클래스(텍스트 색) */
+.text-rose { color: var(--rose-700); }
+.text-sky  { color: var(--sky-700); }
+.text-mint { color: var(--mint-700); }
+.text-grape{ color: var(--grape-700); }
+
+/* 강조는 별도로 */
+.accent { font-weight: 700; }
+
+.badge-rose{
+  background: var(--rose-500);
+  color: var(--rose-700);
+  padding: .2em .6em;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.table-wrap .simple-table th,
+.table-wrap .simple-table td {
+  text-align: center;
 }
