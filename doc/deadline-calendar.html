@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>업무 마감 달력</title>
+  <meta name="color-scheme" content="light only" />
+  <link rel="icon" href="/static/favicon.ico" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f7f8fb;
+      --paper: #ffffff;
+      --line: #e5e7eb;
+      --ink: #111827;
+      --sub: #6b7280;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #166534;
+      --green-soft: #f0fdf4;
+      --amber: #b45309;
+      --amber-soft: #fffbeb;
+      --red: #b91c1c;
+      --red-soft: #fef2f2;
+      --purple: #6d28d9;
+      --purple-soft: #f5f3ff;
+      --shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+    }
+
+    body.page-index {
+      background: linear-gradient(180deg, #fbfcff 0%, var(--page-bg) 100%);
+    }
+
+    .page-head h1 {
+      margin-bottom: 8px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .hero-actions .btn {
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .section-soft {
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fff;
+    }
+
+    .summary-label {
+      margin: 0;
+      color: var(--sub);
+      font-size: 0.92rem;
+    }
+
+    .summary-value {
+      margin: 8px 0 0;
+      color: var(--ink);
+      font-size: clamp(1.6rem, 3vw, 2rem);
+      line-height: 1.1;
+      font-weight: 800;
+    }
+
+    .summary-help {
+      margin: 8px 0 0;
+      color: var(--sub);
+      font-size: 0.9rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1f2937;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+    }
+
+    .toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .toggle input {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .toolbar-right {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .calendar-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #f9fafb;
+      font-size: 0.9rem;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex: none;
+    }
+
+    .legend-dot.high { background: #ef4444; }
+    .legend-dot.medium { background: #f59e0b; }
+    .legend-dot.low { background: #3b82f6; }
+    .legend-dot.done { background: #22c55e; }
+
+    .weekday-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin: 16px 0 8px;
+    }
+
+    .weekday-cell {
+      padding: 6px 0;
+      text-align: center;
+      color: var(--sub);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .calendar-day {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      width: 100%;
+      text-align: left;
+      color: inherit;
+      font: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+
+    .calendar-day:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
+    }
+
+    .calendar-day.is-other-month {
+      opacity: 0.48;
+      background: #fbfbfb;
+    }
+
+    .calendar-day.is-selected {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.12);
+    }
+
+    .calendar-day.is-today {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+    }
+
+    .calendar-day.has-overdue {
+      background: var(--red-soft);
+    }
+
+    .calendar-day.is-sunday .day-number {
+      color: #dc2626;
+    }
+
+    .calendar-day.is-saturday .day-number {
+      color: #2563eb;
+    }
+
+    .calendar-day-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .day-number {
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .day-count {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      color: var(--sub);
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .calendar-task-list {
+      display: grid;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .calendar-task-chip {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 6px 8px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      background: #f8fafc;
+      color: #1f2937;
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .calendar-task-chip.priority-high {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+
+    .calendar-task-chip.priority-medium {
+      background: #fffbeb;
+      border-color: #fde68a;
+    }
+
+    .calendar-task-chip.priority-low {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .calendar-task-chip.is-done {
+      opacity: 0.72;
+      text-decoration: line-through;
+    }
+
+    .more-chip {
+      padding: 4px 6px;
+      color: var(--sub);
+      font-size: 0.8rem;
+    }
+
+    .task-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .task-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .task-card.is-done {
+      background: #fafafa;
+      opacity: 0.8;
+    }
+
+    .task-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .task-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.08rem;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .task-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge.priority-high {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .badge.priority-medium {
+      background: #fffbeb;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+
+    .badge.priority-low {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+
+    .badge.state-todo {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-color: #bfdbfe;
+    }
+
+    .badge.state-doing {
+      background: var(--purple-soft);
+      color: var(--purple);
+      border-color: #ddd6fe;
+    }
+
+    .badge.state-hold {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
+    }
+
+    .badge.state-done {
+      background: var(--green-soft);
+      color: var(--green);
+      border-color: #86efac;
+    }
+
+    .task-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .meta-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #edf1f5;
+      background: #f9fafb;
+    }
+
+    .meta-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--sub);
+      font-size: 0.82rem;
+    }
+
+    .meta-value {
+      color: #111827;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .task-note {
+      margin: 12px 0 0;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px dashed #d1d5db;
+      background: #fafafa;
+      color: #374151;
+    }
+
+    .task-link {
+      margin-top: 12px;
+      display: inline-flex;
+    }
+
+    .empty-state {
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px dashed #d1d5db;
+      background: #fafafa;
+      text-align: center;
+      color: var(--sub);
+    }
+
+    .status-text {
+      font-weight: 800;
+    }
+
+    .status-text.overdue {
+      color: var(--red);
+    }
+
+    .status-text.soon {
+      color: var(--amber);
+    }
+
+    .status-text.done {
+      color: var(--green);
+    }
+
+    .status-text.normal {
+      color: #1f2937;
+    }
+
+    .upcoming-table td,
+    .upcoming-table th {
+      white-space: nowrap;
+    }
+
+    .upcoming-table td.title-cell,
+    .all-task-table td.title-cell {
+      white-space: normal;
+      min-width: 220px;
+      text-align: left;
+    }
+
+    .table-row-done td {
+      opacity: 0.7;
+      background: #fcfcfc;
+    }
+
+    .code-box {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fafafa;
+      color: #111827;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f9fafb;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .helper-text {
+      margin: 6px 0 0;
+      font-size: 0.92rem;
+      color: var(--sub);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fatal-box {
+      margin-top: 18px;
+      border: 1px solid #fecaca;
+      border-radius: 16px;
+      background: #fef2f2;
+      padding: 16px;
+      color: #991b1b;
+    }
+
+    @media (max-width: 980px) {
+      .filter-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .task-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 780px) {
+      .calendar-toolbar {
+        flex-direction: column;
+      }
+
+      .weekday-row,
+      .calendar-grid {
+        gap: 6px;
+      }
+
+      .calendar-day {
+        min-height: 108px;
+        padding: 8px;
+      }
+
+      .day-count {
+        display: none;
+      }
+
+      .calendar-task-chip {
+        padding: 5px 6px;
+        font-size: 0.76rem;
+      }
+
+      .guide-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .filter-grid,
+      .task-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions,
+      .toolbar-right {
+        justify-content: stretch;
+      }
+
+      .hero-actions .btn,
+      .toolbar-right .btn {
+        width: 100%;
+      }
+
+      .weekday-cell {
+        font-size: 0.8rem;
+      }
+
+      .calendar-day {
+        min-height: 92px;
+      }
+    }
+  </style>
+</head>
+<body class="page-index">
+  <a href="#mainContent" class="skip-link">본문 바로가기</a>
+
+  <main id="mainContent" class="container">
+    <section class="section section-soft page-head">
+      <p class="subtitle" id="pageSubtitle">단일 HTML + 외부 JSON 관리</p>
+      <h1 id="pageTitle">업무 마감 달력</h1>
+      <p class="muted" id="pageMeta">데이터를 불러오는 중입니다.</p>
+
+      <div class="callout">
+        <ul class="list-tight" id="guideList">
+          <li>같은 폴더의 JSON 파일을 읽어 달력과 표를 자동 구성합니다.</li>
+        </ul>
+      </div>
+
+      <div class="hero-actions">
+        <button type="button" class="btn pastel-blue" id="btnReloadData">데이터 다시 불러오기</button>
+        <button type="button" class="btn pastel-mint" id="btnTodayFocus">오늘 보기</button>
+        <a class="btn pastel-yellow" href="#calendarSection">달력 보기</a>
+        <a class="btn pastel-purple" href="#allTasksSection">전체 목록</a>
+      </div>
+
+      <div id="fatalErrorBox" class="fatal-box" hidden></div>
+    </section>
+
+    <nav class="section quick-nav section-soft" aria-label="빠른 이동">
+      <h2 class="local-h2">빠른 이동</h2>
+      <div class="chip-row">
+        <a class="chip" href="#dashboard">대시보드</a>
+        <a class="chip" href="#filters">검색/필터</a>
+        <a class="chip" href="#calendarSection">월간 달력</a>
+        <a class="chip" href="#selectedDaySection">선택 날짜</a>
+        <a class="chip" href="#upcomingSection">임박한 마감</a>
+        <a class="chip" href="#allTasksSection">전체 목록</a>
+        <a class="chip" href="#guideSection">GitHub 반영 안내</a>
+      </div>
+    </nav>
+
+    <section class="section section-soft" id="dashboard">
+      <div class="row between gap">
+        <div>
+          <h2>대시보드</h2>
+          <p class="muted" id="dashboardText">현재 등록된 업무를 집계합니다.</p>
+        </div>
+      </div>
+      <div class="summary-grid" id="summaryGrid"></div>
+    </section>
+
+    <section class="section section-soft" id="filters">
+      <h2>검색 / 필터</h2>
+      <div class="filter-grid">
+        <div class="field">
+          <label for="keywordInput">검색</label>
+          <input id="keywordInput" type="text" placeholder="업무명, 비고, 담당자 검색" />
+        </div>
+        <div class="field">
+          <label for="categoryFilter">분류</label>
+          <select id="categoryFilter"></select>
+        </div>
+        <div class="field">
+          <label for="priorityFilter">우선순위</label>
+          <select id="priorityFilter">
+            <option value="all">전체</option>
+            <option value="high">중요</option>
+            <option value="medium">보통</option>
+            <option value="low">여유</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="stateFilter">상태</label>
+          <select id="stateFilter">
+            <option value="all">전체</option>
+            <option value="open">미완료 전체</option>
+            <option value="todo">할 일</option>
+            <option value="doing">진행 중</option>
+            <option value="hold">보류</option>
+            <option value="done">완료</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ownerFilter">담당</label>
+          <select id="ownerFilter"></select>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <label class="toggle" for="urgentOnlyInput">
+          <input id="urgentOnlyInput" type="checkbox" />
+          7일 이내 + 지연 업무만 보기
+        </label>
+        <label class="toggle" for="hideDoneInput">
+          <input id="hideDoneInput" type="checkbox" />
+          완료 업무 숨기기
+        </label>
+        <button type="button" class="btn ghost" id="btnResetFilters">필터 초기화</button>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="calendarSection">
+      <div class="calendar-toolbar">
+        <div>
+          <h2>월간 달력</h2>
+          <p class="muted" id="monthLabel"></p>
+          <div class="calendar-meta">
+            <div class="legend" aria-label="범례">
+              <span class="legend-item"><span class="legend-dot high"></span>중요</span>
+              <span class="legend-item"><span class="legend-dot medium"></span>보통</span>
+              <span class="legend-item"><span class="legend-dot low"></span>여유</span>
+              <span class="legend-item"><span class="legend-dot done"></span>완료</span>
+            </div>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <button type="button" class="btn" id="btnPrevMonth">이전달</button>
+          <button type="button" class="btn pastel-blue" id="btnThisMonth">이번달</button>
+          <button type="button" class="btn" id="btnNextMonth">다음달</button>
+        </div>
+      </div>
+
+      <div class="weekday-row" aria-hidden="true">
+        <div class="weekday-cell">일</div>
+        <div class="weekday-cell">월</div>
+        <div class="weekday-cell">화</div>
+        <div class="weekday-cell">수</div>
+        <div class="weekday-cell">목</div>
+        <div class="weekday-cell">금</div>
+        <div class="weekday-cell">토</div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </section>
+
+    <section class="section section-soft" id="selectedDaySection">
+      <div class="row between gap">
+        <div>
+          <h2 id="selectedDateLabel">선택 날짜 업무</h2>
+          <p class="muted" id="selectedDateHelp">달력에서 날짜를 누르면 해당 날짜 업무를 보여줍니다.</p>
+        </div>
+      </div>
+      <div id="selectedDayEmpty" class="empty-state">선택한 날짜에 표시할 업무가 없습니다.</div>
+      <div id="selectedDayList" class="task-stack"></div>
+    </section>
+
+    <section class="section section-soft" id="upcomingSection">
+      <div class="row between gap">
+        <div>
+          <h2>임박한 마감</h2>
+          <p class="muted">미완료 업무 중 마감이 빠른 순서대로 보여줍니다.</p>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="sheetlike upcoming-table">
+          <thead>
+            <tr>
+              <th>마감일</th>
+              <th>D-day</th>
+              <th>업무</th>
+              <th>분류</th>
+              <th>담당</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="upcomingBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section section-soft" id="allTasksSection">
+      <div class="row between gap">
+        <div>
+          <h2>전체 업무 목록</h2>
+          <p class="muted">정렬 기준: 미완료 우선 → 마감일 빠른 순 → 우선순위</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="sheetlike all-task-table">
+          <thead>
+            <tr>
+              <th>마감일</th>
+              <th>업무</th>
+              <th>분류</th>
+              <th>담당</th>
+              <th>우선순위</th>
+              <th>상태</th>
+              <th>D-day</th>
+            </tr>
+          </thead>
+          <tbody id="taskTableBody"></tbody>
+        </table>
+      </div>
+
+      <p class="note">GitHub에서는 JSON 파일만 수정해도 이 목록과 달력이 함께 바뀝니다.</p>
+    </section>
+
+    <section class="section section-soft" id="guideSection">
+      <h2>GitHub 반영 안내</h2>
+      <div class="guide-grid">
+        <div class="card">
+          <h3 class="local-h3">1. 파일 구성</h3>
+          <p><code id="dataFilePath">./deadline-tasks.json</code> 파일을 이 HTML과 같은 폴더에 두세요.</p>
+          <div class="code-box">/docs
+├─ deadline-calendar.html
+└─ deadline-tasks.json</div>
+          <p class="helper-text">파일명을 바꾸면 HTML의 <code>DATA_URL</code> 값도 같이 바꾸면 됩니다.</p>
+        </div>
+        <div class="card">
+          <h3 class="local-h3">2. JSON 작성 규칙</h3>
+          <div class="pill-row">
+            <span class="pill">큰따옴표 사용</span>
+            <span class="pill">마지막 쉼표 금지</span>
+            <span class="pill">날짜는 YYYY-MM-DD</span>
+            <span class="pill">priority: high/medium/low</span>
+            <span class="pill">state: todo/doing/hold/done</span>
+          </div>
+          <p class="helper-text">GitHub Pages에서는 JSON 업로드 후 새로고침하면 바로 반영됩니다. 반영이 늦으면 상단의 “데이터 다시 불러오기”를 눌러 주세요.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const DATA_URL = "./deadline-tasks.json";
+    const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
+    const PRIORITY_LABEL = { high: "중요", medium: "보통", low: "여유" };
+    const PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
+    const STATE_LABEL = {
+      todo: "할 일",
+      doing: "진행 중",
+      hold: "보류",
+      done: "완료"
+    };
+
+    const DEFAULT_FILTERS = {
+      keyword: "",
+      category: "all",
+      priority: "all",
+      state: "all",
+      owner: "all",
+      urgentOnly: false,
+      hideDone: false
+    };
+
+    const els = {
+      pageTitle: document.getElementById("pageTitle"),
+      pageSubtitle: document.getElementById("pageSubtitle"),
+      pageMeta: document.getElementById("pageMeta"),
+      guideList: document.getElementById("guideList"),
+      fatalErrorBox: document.getElementById("fatalErrorBox"),
+      dataFilePath: document.getElementById("dataFilePath"),
+      dashboardText: document.getElementById("dashboardText"),
+      summaryGrid: document.getElementById("summaryGrid"),
+      keywordInput: document.getElementById("keywordInput"),
+      categoryFilter: document.getElementById("categoryFilter"),
+      priorityFilter: document.getElementById("priorityFilter"),
+      stateFilter: document.getElementById("stateFilter"),
+      ownerFilter: document.getElementById("ownerFilter"),
+      urgentOnlyInput: document.getElementById("urgentOnlyInput"),
+      hideDoneInput: document.getElementById("hideDoneInput"),
+      monthLabel: document.getElementById("monthLabel"),
+      calendarGrid: document.getElementById("calendarGrid"),
+      selectedDateLabel: document.getElementById("selectedDateLabel"),
+      selectedDateHelp: document.getElementById("selectedDateHelp"),
+      selectedDayEmpty: document.getElementById("selectedDayEmpty"),
+      selectedDayList: document.getElementById("selectedDayList"),
+      upcomingBody: document.getElementById("upcomingBody"),
+      taskTableBody: document.getElementById("taskTableBody"),
+      btnReloadData: document.getElementById("btnReloadData")
+    };
+
+    let pageConfig = {
+      title: "업무 마감 달력",
+      subtitle: "단일 HTML + 외부 JSON 관리",
+      lastUpdated: "",
+      manager: "",
+      guideLines: []
+    };
+    let tasks = [];
+    let filters = { ...DEFAULT_FILTERS };
+    let selectedDate = todayKey();
+    let currentMonthDate = startOfMonth(parseLocalDate(selectedDate));
+
+    function parseLocalDate(dateString) {
+      if (!dateString) {
+        return new Date();
+      }
+      const [year, month, day] = String(dateString).split("-").map(Number);
+      return new Date(year, (month || 1) - 1, day || 1, 12, 0, 0, 0);
+    }
+
+    function formatDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function todayKey() {
+      const now = new Date();
+      return formatDateKey(new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12));
+    }
+
+    function startOfMonth(date) {
+      return new Date(date.getFullYear(), date.getMonth(), 1, 12, 0, 0, 0);
+    }
+
+    function formatFullDate(dateString) {
+      const date = parseLocalDate(dateString);
+      return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${WEEKDAYS[date.getDay()]})`;
+    }
+
+    function formatShortDate(dateString) {
+      const date = parseLocalDate(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}.${month}.${day}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function nl2br(text) {
+      return escapeHtml(text).replace(/\n/g, "<br>");
+    }
+
+    function uniqueSorted(values) {
+      return [...new Set(values.map(value => String(value || "").trim()).filter(Boolean))].sort((a, b) =>
+        a.localeCompare(b, "ko")
+      );
+    }
+
+    function normalizeUrl(value) {
+      let next = String(value || "").trim();
+      if (!next) return "";
+      if (!/^https?:\/\//i.test(next)) {
+        next = `https://${next}`;
+      }
+      return next;
+    }
+
+    function normalizeTask(raw, index = 0) {
+      const dueDate = /^\d{4}-\d{2}-\d{2}$/.test(String(raw?.dueDate || ""))
+        ? String(raw.dueDate)
+        : todayKey();
+      const priority = ["high", "medium", "low"].includes(raw?.priority)
+        ? raw.priority
+        : "medium";
+      const state = ["todo", "doing", "hold", "done"].includes(raw?.state)
+        ? raw.state
+        : "todo";
+
+      return {
+        id: String(raw?.id || `task-${index + 1}`),
+        title: String(raw?.title || "제목 없는 업무").trim(),
+        dueDate,
+        category: String(raw?.category || "기타").trim() || "기타",
+        owner: String(raw?.owner || "미지정").trim() || "미지정",
+        priority,
+        state,
+        notes: String(raw?.notes || "").trim(),
+        link: normalizeUrl(raw?.link || "")
+      };
+    }
+
+    function normalizePage(raw) {
+      return {
+        title: String(raw?.title || "업무 마감 달력").trim() || "업무 마감 달력",
+        subtitle: String(raw?.subtitle || "단일 HTML + 외부 JSON 관리").trim(),
+        lastUpdated: String(raw?.lastUpdated || "").trim(),
+        manager: String(raw?.manager || "").trim(),
+        guideLines: Array.isArray(raw?.guideLines)
+          ? raw.guideLines.map(item => String(item || "").trim()).filter(Boolean)
+          : []
+      };
+    }
+
+    async function loadRemoteData() {
+      const requestUrl = `${DATA_URL}?ts=${Date.now()}`;
+      const response = await fetch(requestUrl, { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error(`JSON 파일을 불러오지 못했습니다. (${response.status})`);
+      }
+
+      let parsed;
+      try {
+        parsed = await response.json();
+      } catch (_) {
+        throw new Error("JSON 문법 오류가 있습니다. 큰따옴표, 쉼표, 날짜 형식을 확인해 주세요.");
+      }
+
+      return {
+        page: normalizePage(parsed?.page || {}),
+        tasks: Array.isArray(parsed?.tasks)
+          ? parsed.tasks.map((item, index) => normalizeTask(item, index))
+          : []
+      };
+    }
+
+    function isSameDateKey(a, b) {
+      return String(a) === String(b);
+    }
+
+    function isSameMonth(dateA, dateB) {
+      return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth();
+    }
+
+    function diffDays(fromDateString, toDateString) {
+      const oneDay = 24 * 60 * 60 * 1000;
+      const from = parseLocalDate(fromDateString);
+      const to = parseLocalDate(toDateString);
+      return Math.round((to.getTime() - from.getTime()) / oneDay);
+    }
+
+    function getTaskDday(task) {
+      if (task.state === "done") {
+        return { label: "완료", className: "done" };
+      }
+
+      const diff = diffDays(todayKey(), task.dueDate);
+      if (diff < 0) {
+        return { label: `D+${Math.abs(diff)}`, className: "overdue" };
+      }
+      if (diff === 0) {
+        return { label: "D-Day", className: "soon" };
+      }
+      if (diff <= 7) {
+        return { label: `D-${diff}`, className: "soon" };
+      }
+      return { label: `D-${diff}`, className: "normal" };
+    }
+
+    function compareTasks(a, b) {
+      const aDone = a.state === "done" ? 1 : 0;
+      const bDone = b.state === "done" ? 1 : 0;
+      if (aDone !== bDone) return aDone - bDone;
+
+      const dateGap = parseLocalDate(a.dueDate).getTime() - parseLocalDate(b.dueDate).getTime();
+      if (dateGap !== 0) return dateGap;
+
+      const priorityGap = PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority];
+      if (priorityGap !== 0) return priorityGap;
+
+      return a.title.localeCompare(b.title, "ko");
+    }
+
+    function findBestFocusDate(nextTasks) {
+      const today = todayKey();
+      if (nextTasks.some(task => task.dueDate === today)) {
+        return today;
+      }
+      const nearest = nextTasks.slice().sort(compareTasks)[0];
+      return nearest?.dueDate || today;
+    }
+
+    function getFilteredTasks() {
+      return tasks.filter(task => {
+        const keyword = filters.keyword.trim().toLowerCase();
+        if (keyword) {
+          const target = [task.title, task.notes, task.category, task.owner].join(" ").toLowerCase();
+          if (!target.includes(keyword)) {
+            return false;
+          }
+        }
+
+        if (filters.category !== "all" && task.category !== filters.category) {
+          return false;
+        }
+
+        if (filters.priority !== "all" && task.priority !== filters.priority) {
+          return false;
+        }
+
+        if (filters.owner !== "all" && task.owner !== filters.owner) {
+          return false;
+        }
+
+        if (filters.state !== "all") {
+          if (filters.state === "open") {
+            if (task.state === "done") return false;
+          } else if (task.state !== filters.state) {
+            return false;
+          }
+        }
+
+        if (filters.hideDone && task.state === "done") {
+          return false;
+        }
+
+        if (filters.urgentOnly) {
+          const diff = diffDays(todayKey(), task.dueDate);
+          if (task.state === "done" || diff > 7) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+    }
+
+    function getVisibleTasksOnDate(dateKey, filteredTasks) {
+      return filteredTasks.filter(task => task.dueDate === dateKey).slice().sort(compareTasks);
+    }
+
+    function setSelectOptions(selectEl, options, currentValue) {
+      const html = [`<option value="all">전체</option>`]
+        .concat(options.map(option => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`))
+        .join("");
+      const nextValue = options.includes(currentValue) ? currentValue : "all";
+      selectEl.innerHTML = html;
+      selectEl.value = nextValue;
+      return nextValue;
+    }
+
+    function renderOptionLists() {
+      const categories = uniqueSorted(tasks.map(task => task.category));
+      const owners = uniqueSorted(tasks.map(task => task.owner));
+
+      filters.category = setSelectOptions(els.categoryFilter, categories, filters.category);
+      filters.owner = setSelectOptions(els.ownerFilter, owners, filters.owner);
+    }
+
+    function createSummaryCard(label, value, help) {
+      return `
+        <article class="summary-card">
+          <p class="summary-label">${label}</p>
+          <p class="summary-value">${value}</p>
+          <p class="summary-help">${help}</p>
+        </article>
+      `;
+    }
+
+    function renderHeader() {
+      els.pageTitle.textContent = pageConfig.title;
+      els.pageSubtitle.textContent = pageConfig.subtitle || "단일 HTML + 외부 JSON 관리";
+      els.dataFilePath.textContent = DATA_URL;
+
+      const metaParts = [
+        `오늘: ${formatFullDate(todayKey())}`,
+        pageConfig.lastUpdated ? `마지막 반영: ${pageConfig.lastUpdated}` : "",
+        pageConfig.manager ? `관리 부서: ${pageConfig.manager}` : "",
+        `데이터 파일: ${DATA_URL}`
+      ].filter(Boolean);
+      els.pageMeta.textContent = metaParts.join(" · ");
+      document.title = pageConfig.title;
+
+      const guideItems = pageConfig.guideLines.length
+        ? pageConfig.guideLines
+        : ["GitHub에서는 JSON 파일만 수정하면 달력과 표가 자동 반영됩니다."];
+      els.guideList.innerHTML = guideItems.map(line => `<li>${escapeHtml(line)}</li>`).join("");
+    }
+
+    function renderSummary(filteredTasks) {
+      const total = tasks.length;
+      const completed = tasks.filter(task => task.state === "done").length;
+      const openCount = tasks.filter(task => task.state !== "done").length;
+      const overdue = tasks.filter(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) < 0).length;
+      const upcoming = tasks.filter(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) >= 0 && diffDays(todayKey(), task.dueDate) <= 7).length;
+
+      els.summaryGrid.innerHTML = [
+        createSummaryCard("전체 업무", `${total}건`, "JSON에 등록된 총 업무 수"),
+        createSummaryCard("미완료", `${openCount}건`, "할 일 + 진행 중 + 보류"),
+        createSummaryCard("7일 이내", `${upcoming}건`, "오늘 포함 임박 일정"),
+        createSummaryCard("지연", `${overdue}건`, "마감일이 지난 업무"),
+        createSummaryCard("완료", `${completed}건`, `현재 필터 결과 ${filteredTasks.length}건`)
+      ].join("");
+
+      els.dashboardText.textContent = `현재 필터 결과 ${filteredTasks.length}건 / 전체 ${total}건`;
+    }
+
+    function renderCalendar(filteredTasks) {
+      const monthStart = startOfMonth(currentMonthDate);
+      const monthEnd = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0, 12);
+      const calendarStart = new Date(monthStart);
+      calendarStart.setDate(monthStart.getDate() - monthStart.getDay());
+
+      const tasksByDate = filteredTasks.reduce((acc, task) => {
+        acc[task.dueDate] = acc[task.dueDate] || [];
+        acc[task.dueDate].push(task);
+        return acc;
+      }, {});
+
+      const cells = [];
+      for (let i = 0; i < 42; i += 1) {
+        const date = new Date(calendarStart);
+        date.setDate(calendarStart.getDate() + i);
+        const dateKey = formatDateKey(date);
+        const dayTasks = (tasksByDate[dateKey] || []).slice().sort(compareTasks);
+        const preview = dayTasks.slice(0, 3).map(task => {
+          const prefix = task.state === "done" ? "✓ " : "";
+          return `
+            <span class="calendar-task-chip priority-${task.priority}${task.state === "done" ? " is-done" : ""}" title="${escapeHtml(task.title)}">
+              ${escapeHtml(prefix + task.title)}
+            </span>
+          `;
+        }).join("");
+
+        const extraCount = dayTasks.length > 3 ? `<div class="more-chip">+${dayTasks.length - 3}건 더 보기</div>` : "";
+        const hasOverdue = dayTasks.some(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) < 0);
+        const classes = [
+          "calendar-day",
+          isSameMonth(date, monthStart) ? "" : "is-other-month",
+          isSameDateKey(dateKey, todayKey()) ? "is-today" : "",
+          isSameDateKey(dateKey, selectedDate) ? "is-selected" : "",
+          hasOverdue ? "has-overdue" : "",
+          date.getDay() === 0 ? "is-sunday" : "",
+          date.getDay() === 6 ? "is-saturday" : ""
+        ].filter(Boolean).join(" ");
+
+        cells.push(`
+          <button type="button" class="${classes}" data-date="${dateKey}" aria-label="${formatFullDate(dateKey)}">
+            <div class="calendar-day-head">
+              <span class="day-number">${date.getDate()}</span>
+              <span class="day-count">${dayTasks.length}건</span>
+            </div>
+            <div class="calendar-task-list">
+              ${preview || ""}
+              ${extraCount}
+            </div>
+          </button>
+        `);
+      }
+
+      els.calendarGrid.innerHTML = cells.join("");
+      els.monthLabel.textContent = `${monthStart.getFullYear()}년 ${monthStart.getMonth() + 1}월 · ${formatShortDate(formatDateKey(monthStart))} ~ ${formatShortDate(formatDateKey(monthEnd))}`;
+    }
+
+    function taskCardHtml(task) {
+      const dday = getTaskDday(task);
+      const noteHtml = task.notes
+        ? `<p class="task-note">${nl2br(task.notes)}</p>`
+        : "";
+      const linkHtml = task.link
+        ? `<a class="btn pastel-blue task-link" href="${escapeHtml(task.link)}" target="_blank" rel="noopener">관련 링크</a>`
+        : "";
+
+      return `
+        <article class="task-card${task.state === "done" ? " is-done" : ""}">
+          <div class="task-head">
+            <div>
+              <h3 class="task-title">${escapeHtml(task.title)}</h3>
+              <div class="task-badges">
+                <span class="badge priority-${task.priority}">${PRIORITY_LABEL[task.priority]}</span>
+                <span class="badge state-${task.state}">${STATE_LABEL[task.state]}</span>
+                <span class="badge ${dday.className === "done" ? "state-done" : dday.className === "overdue" ? "priority-high" : dday.className === "soon" ? "priority-medium" : "priority-low"}">${dday.label}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="task-meta">
+            <div class="meta-item">
+              <span class="meta-label">마감일</span>
+              <span class="meta-value">${formatFullDate(task.dueDate)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">분류</span>
+              <span class="meta-value">${escapeHtml(task.category)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">담당</span>
+              <span class="meta-value">${escapeHtml(task.owner)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">마감상태</span>
+              <span class="meta-value"><span class="status-text ${dday.className}">${dday.label}</span></span>
+            </div>
+          </div>
+
+          ${noteHtml}
+          ${linkHtml}
+        </article>
+      `;
+    }
+
+    function renderSelectedDay(filteredTasks) {
+      const selectedTasks = getVisibleTasksOnDate(selectedDate, filteredTasks);
+      els.selectedDateLabel.textContent = `${formatFullDate(selectedDate)} 업무`;
+      els.selectedDateHelp.textContent = `현재 필터 기준 ${selectedTasks.length}건 표시`;
+
+      if (!selectedTasks.length) {
+        els.selectedDayEmpty.hidden = false;
+        els.selectedDayList.innerHTML = "";
+        return;
+      }
+
+      els.selectedDayEmpty.hidden = true;
+      els.selectedDayList.innerHTML = selectedTasks.map(task => taskCardHtml(task)).join("");
+    }
+
+    function renderUpcoming(filteredTasks) {
+      const upcomingTasks = filteredTasks
+        .filter(task => task.state !== "done")
+        .slice()
+        .sort(compareTasks)
+        .slice(0, 8);
+
+      if (!upcomingTasks.length) {
+        els.upcomingBody.innerHTML = `
+          <tr>
+            <td colspan="6">표시할 임박 업무가 없습니다.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      els.upcomingBody.innerHTML = upcomingTasks.map(task => {
+        const dday = getTaskDday(task);
+        return `
+          <tr>
+            <td>${formatShortDate(task.dueDate)}</td>
+            <td><span class="status-text ${dday.className}">${dday.label}</span></td>
+            <td class="title-cell">${escapeHtml(task.title)}</td>
+            <td>${escapeHtml(task.category)}</td>
+            <td>${escapeHtml(task.owner)}</td>
+            <td>${STATE_LABEL[task.state]}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderTaskTable(filteredTasks) {
+      if (!filteredTasks.length) {
+        els.taskTableBody.innerHTML = `
+          <tr>
+            <td colspan="7">조건에 맞는 업무가 없습니다.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      els.taskTableBody.innerHTML = filteredTasks
+        .slice()
+        .sort(compareTasks)
+        .map(task => {
+          const dday = getTaskDday(task);
+          return `
+            <tr class="${task.state === "done" ? "table-row-done" : ""}">
+              <td>${formatShortDate(task.dueDate)}</td>
+              <td class="title-cell">${escapeHtml(task.title)}</td>
+              <td>${escapeHtml(task.category)}</td>
+              <td>${escapeHtml(task.owner)}</td>
+              <td>${PRIORITY_LABEL[task.priority]}</td>
+              <td>${STATE_LABEL[task.state]}</td>
+              <td><span class="status-text ${dday.className}">${dday.label}</span></td>
+            </tr>
+          `;
+        }).join("");
+    }
+
+    function renderAll() {
+      renderHeader();
+      renderOptionLists();
+      const filteredTasks = getFilteredTasks().slice().sort(compareTasks);
+      renderSummary(filteredTasks);
+      renderCalendar(filteredTasks);
+      renderSelectedDay(filteredTasks);
+      renderUpcoming(filteredTasks);
+      renderTaskTable(filteredTasks);
+    }
+
+    function resetFilters() {
+      filters = { ...DEFAULT_FILTERS };
+      els.keywordInput.value = "";
+      els.categoryFilter.value = "all";
+      els.priorityFilter.value = "all";
+      els.stateFilter.value = "all";
+      els.ownerFilter.value = "all";
+      els.urgentOnlyInput.checked = false;
+      els.hideDoneInput.checked = false;
+      renderAll();
+    }
+
+    function syncFiltersFromInputs() {
+      filters.keyword = els.keywordInput.value || "";
+      filters.category = els.categoryFilter.value || "all";
+      filters.priority = els.priorityFilter.value || "all";
+      filters.state = els.stateFilter.value || "all";
+      filters.owner = els.ownerFilter.value || "all";
+      filters.urgentOnly = els.urgentOnlyInput.checked;
+      filters.hideDone = els.hideDoneInput.checked;
+      renderAll();
+    }
+
+    function focusDate(dateKey) {
+      selectedDate = dateKey;
+      currentMonthDate = startOfMonth(parseLocalDate(dateKey));
+      renderAll();
+    }
+
+    function shiftMonth(offset) {
+      const next = new Date(currentMonthDate);
+      next.setMonth(next.getMonth() + offset, 1);
+      currentMonthDate = startOfMonth(next);
+      if (!isSameMonth(parseLocalDate(selectedDate), currentMonthDate)) {
+        selectedDate = formatDateKey(currentMonthDate);
+      }
+      renderAll();
+    }
+
+    function showFatalError(message) {
+      els.fatalErrorBox.hidden = false;
+      els.fatalErrorBox.innerHTML = `
+        <strong>데이터 로딩 실패</strong><br>
+        ${escapeHtml(message)}<br><br>
+        확인할 항목<br>
+        1) HTML과 JSON 파일 경로가 같은지<br>
+        2) JSON 문법 오류가 없는지<br>
+        3) 로컬에서 파일을 더블클릭하지 말고 GitHub Pages 또는 Live Server로 열었는지
+      `.trim();
+    }
+
+    function hideFatalError() {
+      els.fatalErrorBox.hidden = true;
+      els.fatalErrorBox.innerHTML = "";
+    }
+
+    function setLoading(isLoading) {
+      els.btnReloadData.disabled = isLoading;
+      els.btnReloadData.textContent = isLoading ? "불러오는 중..." : "데이터 다시 불러오기";
+    }
+
+    async function refreshData({ preserveSelected = true } = {}) {
+      hideFatalError();
+      setLoading(true);
+
+      try {
+        const loaded = await loadRemoteData();
+        const previousSelectedDate = selectedDate;
+        pageConfig = loaded.page;
+        tasks = loaded.tasks;
+
+        if (preserveSelected && tasks.some(task => task.dueDate === previousSelectedDate)) {
+          selectedDate = previousSelectedDate;
+        } else {
+          selectedDate = findBestFocusDate(tasks);
+        }
+
+        currentMonthDate = startOfMonth(parseLocalDate(selectedDate));
+        renderAll();
+      } catch (error) {
+        showFatalError(error?.message || "알 수 없는 오류가 발생했습니다.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    function bindEvents() {
+      document.getElementById("btnReloadData").addEventListener("click", () => {
+        refreshData({ preserveSelected: true });
+      });
+      document.getElementById("btnTodayFocus").addEventListener("click", () => focusDate(todayKey()));
+      document.getElementById("btnThisMonth").addEventListener("click", () => focusDate(todayKey()));
+      document.getElementById("btnPrevMonth").addEventListener("click", () => shiftMonth(-1));
+      document.getElementById("btnNextMonth").addEventListener("click", () => shiftMonth(1));
+      document.getElementById("btnResetFilters").addEventListener("click", resetFilters);
+
+      [
+        els.keywordInput,
+        els.categoryFilter,
+        els.priorityFilter,
+        els.stateFilter,
+        els.ownerFilter,
+        els.urgentOnlyInput,
+        els.hideDoneInput
+      ].forEach(element => {
+        const eventName = element === els.keywordInput ? "input" : "change";
+        element.addEventListener(eventName, syncFiltersFromInputs);
+      });
+
+      els.calendarGrid.addEventListener("click", event => {
+        const button = event.target.closest("[data-date]");
+        if (!button) return;
+        focusDate(button.getAttribute("data-date"));
+      });
+    }
+
+    function init() {
+      bindEvents();
+      refreshData({ preserveSelected: false });
+    }
+
+    init();
+  </script>
+  <script src="/static/footer.js"></script>
+</body>
+</html>
