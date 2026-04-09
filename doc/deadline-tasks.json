@@ -1,33 +1,46 @@
 {
-  "id": "task-2026-04-10-01",
-  "title": "교육공무직 실태조사 자료 제출",
-  "dueDate": "2026-04-10",
-  "category": "제출",
-  "owner": "미지정",
-  "priority": "high",
-  "state": "todo",
-  "notes": "",
-  "link": ""
-},
-{
-  "id": "task-2026-04-10-02",
-  "title": "2026.3월 사회보험료 납부 기일",
-  "dueDate": "2026-04-10",
-  "category": "사회보험",
-  "owner": "미지정",
-  "priority": "high",
-  "state": "todo",
-  "notes": "",
-  "link": ""
-},
-{
-  "id": "task-2026-04-10-03",
-  "title": "[오후] 더배움공동체 연수",
-  "dueDate": "2026-04-10",
-  "category": "연수",
-  "owner": "미지정",
-  "priority": "medium",
-  "state": "todo",
-  "notes": "오후 일정",
-  "link": ""
+  "page": {
+    "title": "업무 마감 달력",
+    "subtitle": "HTML + JSON 분리형 · GitHub 업로드용",
+    "lastUpdated": "2026-04-10 13:00",
+    "manager": "행정실",
+    "guideLines": [
+      "JSON만 수정하면 됩니다."
+    ]
+  },
+  "tasks": [
+    {
+      "id": "task-2026-04-10-01",
+      "title": "교육공무직 실태조사 자료 제출",
+      "dueDate": "2026-04-10",
+      "category": "제출",
+      "owner": "미지정",
+      "priority": "high",
+      "state": "todo",
+      "notes": "",
+      "link": ""
+    },
+    {
+      "id": "task-2026-04-10-02",
+      "title": "2026.3월 사회보험료 납부 기일",
+      "dueDate": "2026-04-10",
+      "category": "사회보험",
+      "owner": "미지정",
+      "priority": "high",
+      "state": "todo",
+      "notes": "",
+      "link": ""
+    },
+    {
+      "id": "task-2026-04-10-03",
+      "title": "[오후] 더배움공동체 연수",
+      "dueDate": "2026-04-10",
+      "category": "연수",
+      "owner": "미지정",
+      "priority": "medium",
+      "state": "todo",
+      "notes": "오후 일정",
+      "link": ""
+    }
+  ]
 }
