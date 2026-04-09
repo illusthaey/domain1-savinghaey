@@ -1,126 +1,33 @@
 {
-  "page": {
-    "title": "업무 마감 달력",
-    "subtitle": "HTML + JSON 분리형 · GitHub 업로드용",
-    "lastUpdated": "2026-04-09 09:00",
-    "manager": "행정실",
-    "guideLines": [
-      "GitHub에서는 deadline-tasks.json 파일만 수정하면 됩니다.",
-      "마감일은 YYYY-MM-DD 형식으로 입력하면 달력과 표에 자동 반영됩니다.",
-      "priority는 high · medium · low, state는 todo · doing · hold · done만 사용하세요.",
-      "업로드 후 페이지가 예전 데이터로 보이면 상단의 데이터 다시 불러오기 버튼을 눌러 주세요."
-    ]
-  },
-  "tasks": [
-    {
-      "id": "task-001",
-      "title": "주간 업무보고 제출",
-      "dueDate": "2026-04-09",
-      "category": "보고",
-      "owner": "행정실",
-      "priority": "high",
-      "state": "todo",
-      "notes": "부장 확인 후 내부결재 상신",
-      "link": ""
-    },
-    {
-      "id": "task-002",
-      "title": "강사 계약서 증빙 스캔 업로드",
-      "dueDate": "2026-04-10",
-      "category": "계약",
-      "owner": "교육지원",
-      "priority": "high",
-      "state": "doing",
-      "notes": "주민등록등본, 통장사본, 성범죄 조회 동의서 확인",
-      "link": ""
-    },
-    {
-      "id": "task-003",
-      "title": "1분기 강사료 정산 결재",
-      "dueDate": "2026-04-11",
-      "category": "회계",
-      "owner": "행정실",
-      "priority": "high",
-      "state": "doing",
-      "notes": "출석부 대조 후 지출결의서 연결",
-      "link": ""
-    },
-    {
-      "id": "task-004",
-      "title": "만족도 설문 결과 취합",
-      "dueDate": "2026-04-14",
-      "category": "통계",
-      "owner": "교무부",
-      "priority": "medium",
-      "state": "todo",
-      "notes": "학년별 응답 수 체크 후 그래프 작성",
-      "link": ""
-    },
-    {
-      "id": "task-005",
-      "title": "예산 변경 품의 초안 작성",
-      "dueDate": "2026-04-07",
-      "category": "예산",
-      "owner": "행정실",
-      "priority": "high",
-      "state": "hold",
-      "notes": "교장 결재 전 항목 재확인 필요",
-      "link": ""
-    },
-    {
-      "id": "task-006",
-      "title": "교내 행사 안내문 발송",
-      "dueDate": "2026-04-08",
-      "category": "행사",
-      "owner": "학생부",
-      "priority": "medium",
-      "state": "done",
-      "notes": "가정통신문 발송 완료",
-      "link": ""
-    },
-    {
-      "id": "task-007",
-      "title": "신규 강사 서류 보완 요청",
-      "dueDate": "2026-04-15",
-      "category": "계약",
-      "owner": "교육지원",
-      "priority": "medium",
-      "state": "todo",
-      "notes": "자격증 사본 누락자에게 안내",
-      "link": ""
-    },
-    {
-      "id": "task-008",
-      "title": "물품구매 비교견적 업로드",
-      "dueDate": "2026-04-18",
-      "category": "구매",
-      "owner": "행정실",
-      "priority": "medium",
-      "state": "todo",
-      "notes": "3개 업체 비교표 첨부",
-      "link": ""
-    },
-    {
-      "id": "task-009",
-      "title": "5월 강의실 배정 검토",
-      "dueDate": "2026-04-24",
-      "category": "운영",
-      "owner": "교무부",
-      "priority": "low",
-      "state": "todo",
-      "notes": "특별실 사용 일정 중복 여부 확인",
-      "link": ""
-    },
-    {
-      "id": "task-010",
-      "title": "월말 보안점검 체크리스트 제출",
-      "dueDate": "2026-04-29",
-      "category": "점검",
-      "owner": "정보부",
-      "priority": "low",
-      "state": "todo",
-      "notes": "PC 보안 업데이트 현황 포함",
-      "link": ""
-    }
-  ]
+  "id": "task-2026-04-10-01",
+  "title": "교육공무직 실태조사 자료 제출",
+  "dueDate": "2026-04-10",
+  "category": "제출",
+  "owner": "미지정",
+  "priority": "high",
+  "state": "todo",
+  "notes": "",
+  "link": ""
+},
+{
+  "id": "task-2026-04-10-02",
+  "title": "2026.3월 사회보험료 납부 기일",
+  "dueDate": "2026-04-10",
+  "category": "사회보험",
+  "owner": "미지정",
+  "priority": "high",
+  "state": "todo",
+  "notes": "",
+  "link": ""
+},
+{
+  "id": "task-2026-04-10-03",
+  "title": "[오후] 더배움공동체 연수",
+  "dueDate": "2026-04-10",
+  "category": "연수",
+  "owner": "미지정",
+  "priority": "medium",
+  "state": "todo",
+  "notes": "오후 일정",
+  "link": ""
 }
