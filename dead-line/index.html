@@ -3,7 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>업무 마감 달력</title>
+  <title>고주무관 업무 마감 달력</title>
+
+
+
+  <link rel="icon" href="/static/favicon.ico" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="/static/footer.js"></script>
+  <script src="/static/global-loader.js?v=1"></script>
+
+  
   <meta name="color-scheme" content="light only" />
   <link rel="icon" href="/static/favicon.ico" />
   <link rel="stylesheet" href="/static/style.css" />
@@ -704,22 +713,16 @@
     }
   </style>
 </head>
-<body class="page-index">
-  <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
-  <main id="mainContent" class="container">
+
+<body class="alien-side-bg">
+<div class="alien-page-frame">
+<main class="container">
+  
     <section class="section section-soft page-head">
-      <p class="subtitle">정적 페이지 + 바닐라 JavaScript 기반</p>
       <h1>업무 마감 달력</h1>
       <p class="muted" id="todayLabel"></p>
 
-      <div class="callout">
-        <ul class="list-tight">
-          <li>업무를 추가·수정·완료 처리하면 브라우저에 자동 저장됩니다.</li>
-          <li>공개용 일정은 아래 코드의 <strong>seedTasks</strong> 배열만 GitHub에서 수정하면 바로 반영할 수 있습니다.</li>
-          <li>달력, 임박 마감, 전체 목록을 한 화면에서 같이 보도록 구성했습니다.</li>
-        </ul>
-      </div>
 
       <div class="hero-actions">
         <button type="button" class="btn pastel-blue" id="btnOpenCreate">업무 추가</button>
