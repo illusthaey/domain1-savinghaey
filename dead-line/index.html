@@ -1177,7 +1177,7 @@
         `오늘: ${formatFullDate(todayKey())}`,
         pageConfig.lastUpdated ? `마지막 반영: ${pageConfig.lastUpdated}` : "",
         pageConfig.manager ? `개발자: ${pageConfig.manager}` : "",
-        `데이터 파일: ${DATA_URL}`
+        `JSON: ${DATA_URL}`
       ].filter(Boolean);
       els.pageMeta.textContent = metaParts.join(" · ");
       document.title = pageConfig.title;
