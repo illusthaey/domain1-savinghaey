@@ -6,12 +6,10 @@
   <title>업무 마감 달력</title>
   <meta name="color-scheme" content="light only" />
 
-
   <link rel="icon" href="/static/favicon.ico" />
   <link rel="stylesheet" href="/static/style.css" />
   <script src="/static/footer.js"></script>
   <script src="/static/global-loader.js?v=1"></script>
-
 
   <style>
     :root {
@@ -40,19 +38,6 @@
 
     .page-head h1 {
       margin-bottom: 8px;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .hero-actions .btn {
-      min-width: 140px;
-      text-align: center;
     }
 
     .section-soft {
@@ -91,6 +76,19 @@
       margin: 8px 0 0;
       color: var(--sub);
       font-size: 0.9rem;
+    }
+
+    .quick-nav-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .quick-nav-list .chip {
+      width: 100%;
+      justify-content: flex-start;
+      padding: 12px 14px;
+      border-radius: 14px;
     }
 
     .filter-grid {
@@ -183,7 +181,8 @@
       flex: none;
     }
 
-    .legend-dot.high { background: #ef4444; }
+    .legend-dot.high-important { background: #ef4444; }
+    .legend-dot.high-urgent { background: #f97316; }
     .legend-dot.medium { background: #f59e0b; }
     .legend-dot.low { background: #3b82f6; }
     .legend-dot.done { background: #22c55e; }
@@ -304,9 +303,14 @@
       line-height: 1.35;
     }
 
-    .calendar-task-chip.priority-high {
+    .calendar-task-chip.priority-high-important {
       background: #fef2f2;
       border-color: #fecaca;
+    }
+
+    .calendar-task-chip.priority-high-urgent {
+      background: #fff7ed;
+      border-color: #fdba74;
     }
 
     .calendar-task-chip.priority-medium {
@@ -317,6 +321,11 @@
     .calendar-task-chip.priority-low {
       background: #eff6ff;
       border-color: #bfdbfe;
+    }
+
+    .calendar-task-chip.priority-empty {
+      background: #f3f4f6;
+      border-color: #e5e7eb;
     }
 
     .calendar-task-chip.is-done {
@@ -345,7 +354,7 @@
 
     .task-card.is-done {
       background: #fafafa;
-      opacity: 0.8;
+      opacity: 0.82;
     }
 
     .task-head {
@@ -382,10 +391,16 @@
       white-space: nowrap;
     }
 
-    .badge.priority-high {
+    .badge.priority-high-important {
       background: #fef2f2;
       color: #b91c1c;
       border-color: #fecaca;
+    }
+
+    .badge.priority-high-urgent {
+      background: #fff7ed;
+      color: #c2410c;
+      border-color: #fdba74;
     }
 
     .badge.priority-medium {
@@ -400,28 +415,41 @@
       border-color: #bfdbfe;
     }
 
-    .badge.state-todo {
+    .badge.priority-empty,
+    .badge.state-empty {
+      background: #f3f4f6;
+      color: #6b7280;
+      border-color: #e5e7eb;
+    }
+
+    .badge.state-not-started {
       background: #eff6ff;
       color: #1d4ed8;
       border-color: #bfdbfe;
     }
 
-    .badge.state-doing {
+    .badge.state-in-progress {
       background: var(--purple-soft);
       color: var(--purple);
       border-color: #ddd6fe;
-    }
-
-    .badge.state-hold {
-      background: #fff7ed;
-      color: #c2410c;
-      border-color: #fdba74;
     }
 
     .badge.state-done {
       background: var(--green-soft);
       color: var(--green);
       border-color: #86efac;
+    }
+
+    .badge.state-overdue-open {
+      background: #fef2f2;
+      color: #b91c1c;
+      border-color: #fecaca;
+    }
+
+    .badge.state-overdue-done {
+      background: #ecfdf5;
+      color: #047857;
+      border-color: #a7f3d0;
     }
 
     .task-meta {
@@ -451,7 +479,7 @@
       word-break: break-word;
     }
 
-    .task-note {
+    .detail-box {
       margin: 12px 0 0;
       padding: 12px 14px;
       border-radius: 12px;
@@ -460,9 +488,63 @@
       color: #374151;
     }
 
+    .detail-box strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+
     .task-link {
       margin-top: 12px;
       display: inline-flex;
+    }
+
+    .daily-status-box {
+      margin: 14px 0 18px;
+    }
+
+    .attendance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .attendance-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .attendance-title {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .attendance-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .attendance-item {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #edf1f5;
+      background: #f9fafb;
+    }
+
+    .attendance-empty {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px dashed #d1d5db;
+      background: #fafafa;
+      color: var(--sub);
     }
 
     .empty-state {
@@ -596,23 +678,23 @@
         font-size: 0.76rem;
       }
 
-      .guide-grid {
+      .guide-grid,
+      .attendance-grid {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 640px) {
       .filter-grid,
-      .task-meta {
+      .task-meta,
+      .attendance-item {
         grid-template-columns: 1fr;
       }
 
-      .hero-actions,
       .toolbar-right {
         justify-content: stretch;
       }
 
-      .hero-actions .btn,
       .toolbar-right .btn {
         width: 100%;
       }
@@ -627,29 +709,23 @@
     }
   </style>
 </head>
-  
-<body class="alien-side-bg">
+
+<body class="page-index alien-side-bg">
 <div class="alien-page-frame">
 
   <a href="#mainContent" class="skip-link">본문 바로가기</a>
 
   <main id="mainContent" class="container">
     <section class="section section-soft page-head">
-      <p class="subtitle" id="pageSubtitle">단일 HTML + 외부 JSON 관리</p>
+      <p class="subtitle" id="pageSubtitle">업무 일정 JSON 관리</p>
       <h1 id="pageTitle">업무 마감 달력</h1>
       <p class="muted" id="pageMeta">데이터를 불러오는 중입니다.</p>
 
       <div class="callout">
         <ul class="list-tight" id="guideList">
-          <li>같은 폴더의 JSON 파일을 읽어 달력과 표를 자동 구성합니다.</li>
+          <li>JSON 항목은 모두 선택 입력입니다. 값을 비워두어도 불러오기 오류가 나지 않습니다.</li>
+          <li>같은 폴더의 JSON 파일만 수정해도 달력, 목록, 일별 복무 현황이 함께 반영됩니다.</li>
         </ul>
-      </div>
-
-      <div class="hero-actions">
-        <button type="button" class="btn pastel-blue" id="btnReloadData">데이터 다시 불러오기</button>
-        <button type="button" class="btn pastel-mint" id="btnTodayFocus">오늘 보기</button>
-        <a class="btn pastel-yellow" href="#calendarSection">달력 보기</a>
-        <a class="btn pastel-purple" href="#allTasksSection">전체 목록</a>
       </div>
 
       <div id="fatalErrorBox" class="fatal-box" hidden></div>
@@ -657,21 +733,20 @@
 
     <nav class="section quick-nav section-soft" aria-label="빠른 이동">
       <h2 class="local-h2">빠른 이동</h2>
-      <div class="chip-row">
-        <a class="chip" href="#dashboard">대시보드</a>
+      <div class="quick-nav-list">
+        <a class="chip" href="#dashboard">업무 대시보드</a>
         <a class="chip" href="#filters">검색/필터</a>
         <a class="chip" href="#calendarSection">월간 달력</a>
-        <a class="chip" href="#selectedDaySection">선택 날짜</a>
-        <a class="chip" href="#upcomingSection">임박한 마감</a>
-        <a class="chip" href="#allTasksSection">전체 목록</a>
-        <a class="chip" href="#guideSection">GitHub 반영 안내</a>
+        <a class="chip" href="#selectedDaySection">선택 일자 업무 목록</a>
+        <a class="chip" href="#upcomingSection">마감 임박 업무 목록</a>
+        <a class="chip" href="#allTasksSection">전체 업무 목록</a>
       </div>
     </nav>
 
     <section class="section section-soft" id="dashboard">
       <div class="row between gap">
         <div>
-          <h2>대시보드</h2>
+          <h2>업무 대시보드</h2>
           <p class="muted" id="dashboardText">현재 등록된 업무를 집계합니다.</p>
         </div>
       </div>
@@ -679,11 +754,11 @@
     </section>
 
     <section class="section section-soft" id="filters">
-      <h2>검색 / 필터</h2>
+      <h2>검색/필터</h2>
       <div class="filter-grid">
         <div class="field">
           <label for="keywordInput">검색</label>
-          <input id="keywordInput" type="text" placeholder="업무명, 비고, 담당자 검색" />
+          <input id="keywordInput" type="text" placeholder="업무명, 비고, 청 담당자, 문의처 검색" />
         </div>
         <div class="field">
           <label for="categoryFilter">분류</label>
@@ -693,9 +768,10 @@
           <label for="priorityFilter">우선순위</label>
           <select id="priorityFilter">
             <option value="all">전체</option>
-            <option value="high">중요</option>
-            <option value="medium">보통</option>
-            <option value="low">여유</option>
+            <option value="높음(중요)">높음(중요)</option>
+            <option value="높음(급함)">높음(급함)</option>
+            <option value="보통">보통</option>
+            <option value="낮음">낮음</option>
           </select>
         </div>
         <div class="field">
@@ -703,22 +779,23 @@
           <select id="stateFilter">
             <option value="all">전체</option>
             <option value="open">미완료 전체</option>
-            <option value="todo">할 일</option>
-            <option value="doing">진행 중</option>
-            <option value="hold">보류</option>
-            <option value="done">완료</option>
+            <option value="아직 시작 전">아직 시작 전</option>
+            <option value="진행 중">진행 중</option>
+            <option value="완료">완료</option>
+            <option value="기한 지남(미완료)">기한 지남(미완료)</option>
+            <option value="기한 지남(완료)">기한 지남(완료)</option>
           </select>
         </div>
         <div class="field">
-          <label for="ownerFilter">담당</label>
-          <select id="ownerFilter"></select>
+          <label for="managerFilter">청 담당자</label>
+          <select id="managerFilter"></select>
         </div>
       </div>
 
       <div class="toggle-row">
         <label class="toggle" for="urgentOnlyInput">
           <input id="urgentOnlyInput" type="checkbox" />
-          7일 이내 + 지연 업무만 보기
+          마감 임박/기한 지난 업무만 보기
         </label>
         <label class="toggle" for="hideDoneInput">
           <input id="hideDoneInput" type="checkbox" />
@@ -735,16 +812,17 @@
           <p class="muted" id="monthLabel"></p>
           <div class="calendar-meta">
             <div class="legend" aria-label="범례">
-              <span class="legend-item"><span class="legend-dot high"></span>중요</span>
+              <span class="legend-item"><span class="legend-dot high-important"></span>높음(중요)</span>
+              <span class="legend-item"><span class="legend-dot high-urgent"></span>높음(급함)</span>
               <span class="legend-item"><span class="legend-dot medium"></span>보통</span>
-              <span class="legend-item"><span class="legend-dot low"></span>여유</span>
+              <span class="legend-item"><span class="legend-dot low"></span>낮음</span>
               <span class="legend-item"><span class="legend-dot done"></span>완료</span>
             </div>
           </div>
         </div>
         <div class="toolbar-right">
           <button type="button" class="btn" id="btnPrevMonth">이전달</button>
-          <button type="button" class="btn pastel-blue" id="btnThisMonth">이번달</button>
+          <button type="button" class="btn pastel-mint" id="btnTodayFocus">오늘보기</button>
           <button type="button" class="btn" id="btnNextMonth">다음달</button>
         </div>
       </div>
@@ -764,10 +842,24 @@
     <section class="section section-soft" id="selectedDaySection">
       <div class="row between gap">
         <div>
-          <h2 id="selectedDateLabel">선택 날짜 업무</h2>
-          <p class="muted" id="selectedDateHelp">달력에서 날짜를 누르면 해당 날짜 업무를 보여줍니다.</p>
+          <h2 id="selectedDateLabel">선택 일자 업무 목록</h2>
+          <p class="muted" id="selectedDateHelp">달력에서 날짜를 누르면 해당 날짜 업무와 복무 현황을 보여줍니다.</p>
         </div>
       </div>
+
+      <div id="dailyStatusBox" class="daily-status-box" hidden>
+        <div class="attendance-grid">
+          <article class="attendance-card">
+            <h3 class="attendance-title">결재권자 복무 현황</h3>
+            <div id="approverStatusList" class="attendance-list"></div>
+          </article>
+          <article class="attendance-card">
+            <h3 class="attendance-title">사업담당자 복무 현황</h3>
+            <div id="projectStatusList" class="attendance-list"></div>
+          </article>
+        </div>
+      </div>
+
       <div id="selectedDayEmpty" class="empty-state">선택한 날짜에 표시할 업무가 없습니다.</div>
       <div id="selectedDayList" class="task-stack"></div>
     </section>
@@ -775,19 +867,19 @@
     <section class="section section-soft" id="upcomingSection">
       <div class="row between gap">
         <div>
-          <h2>임박한 마감</h2>
-          <p class="muted">미완료 업무 중 마감이 빠른 순서대로 보여줍니다.</p>
+          <h2>마감 임박 업무 목록</h2>
+          <p class="muted">미완료 업무 중 마감일이 빠른 순서대로 보여줍니다.</p>
         </div>
       </div>
       <div class="table-wrap">
         <table class="sheetlike upcoming-table">
           <thead>
             <tr>
-              <th>마감일</th>
+              <th>마감일시</th>
               <th>D-day</th>
               <th>업무</th>
               <th>분류</th>
-              <th>담당</th>
+              <th>청 담당자</th>
               <th>상태</th>
             </tr>
           </thead>
@@ -808,10 +900,10 @@
         <table class="sheetlike all-task-table">
           <thead>
             <tr>
-              <th>마감일</th>
+              <th>마감일시</th>
               <th>업무</th>
               <th>분류</th>
-              <th>담당</th>
+              <th>청 담당자</th>
               <th>우선순위</th>
               <th>상태</th>
               <th>D-day</th>
@@ -821,7 +913,7 @@
         </table>
       </div>
 
-      <p class="note">GitHub에서는 JSON 파일만 수정해도 이 목록과 달력이 함께 바뀝니다.</p>
+      <p class="note">GitHub에서는 JSON 파일만 수정해도 이 목록과 달력, 선택 일자 복무 현황이 함께 바뀝니다.</p>
     </section>
 
     <section class="section section-soft" id="guideSection">
@@ -840,11 +932,12 @@
           <div class="pill-row">
             <span class="pill">큰따옴표 사용</span>
             <span class="pill">마지막 쉼표 금지</span>
-            <span class="pill">날짜는 YYYY-MM-DD</span>
-            <span class="pill">priority: high/medium/low</span>
-            <span class="pill">state: todo/doing/hold/done</span>
+            <span class="pill">dueDate: YYYY-MM-DD 또는 YYYY-MM-DD HH:mm</span>
+            <span class="pill">priority: 높음(중요)/높음(급함)/보통/낮음</span>
+            <span class="pill">state: 아직 시작 전/진행 중/완료/기한 지남(미완료)/기한 지남(완료)</span>
+            <span class="pill">빈 값 허용: ""</span>
           </div>
-          <p class="helper-text">GitHub Pages에서는 JSON 업로드 후 새로고침하면 바로 반영됩니다. 반영이 늦으면 상단의 “데이터 다시 불러오기”를 눌러 주세요.</p>
+          <p class="helper-text">일별 복무 현황은 <code>dailyStatus</code> 배열에 날짜별로 넣으면 되고, 업무 관련 추가 정보는 자유 텍스트로 입력해도 됩니다.</p>
         </div>
       </div>
     </section>
@@ -853,12 +946,26 @@
   <script>
     const DATA_URL = "./deadline-tasks.json";
     const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
-    const PRIORITY_LABEL = { high: "중요", medium: "보통", low: "여유" };
-    const PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
-    const STATE_LABEL = {
-      todo: "할 일",
+
+    const PRIORITY_OPTIONS = ["높음(중요)", "높음(급함)", "보통", "낮음"];
+    const PRIORITY_ORDER = {
+      "높음(중요)": 0,
+      "높음(급함)": 1,
+      "보통": 2,
+      "낮음": 3,
+      "": 99
+    };
+    const LEGACY_PRIORITY_MAP = {
+      high: "높음(중요)",
+      medium: "보통",
+      low: "낮음"
+    };
+
+    const STATE_OPTIONS = ["아직 시작 전", "진행 중", "완료", "기한 지남(미완료)", "기한 지남(완료)"];
+    const LEGACY_STATE_MAP = {
+      todo: "아직 시작 전",
       doing: "진행 중",
-      hold: "보류",
+      hold: "진행 중",
       done: "완료"
     };
 
@@ -867,7 +974,7 @@
       category: "all",
       priority: "all",
       state: "all",
-      owner: "all",
+      manager: "all",
       urgentOnly: false,
       hideDone: false
     };
@@ -885,38 +992,68 @@
       categoryFilter: document.getElementById("categoryFilter"),
       priorityFilter: document.getElementById("priorityFilter"),
       stateFilter: document.getElementById("stateFilter"),
-      ownerFilter: document.getElementById("ownerFilter"),
+      managerFilter: document.getElementById("managerFilter"),
       urgentOnlyInput: document.getElementById("urgentOnlyInput"),
       hideDoneInput: document.getElementById("hideDoneInput"),
       monthLabel: document.getElementById("monthLabel"),
       calendarGrid: document.getElementById("calendarGrid"),
       selectedDateLabel: document.getElementById("selectedDateLabel"),
       selectedDateHelp: document.getElementById("selectedDateHelp"),
+      dailyStatusBox: document.getElementById("dailyStatusBox"),
+      approverStatusList: document.getElementById("approverStatusList"),
+      projectStatusList: document.getElementById("projectStatusList"),
       selectedDayEmpty: document.getElementById("selectedDayEmpty"),
       selectedDayList: document.getElementById("selectedDayList"),
       upcomingBody: document.getElementById("upcomingBody"),
-      taskTableBody: document.getElementById("taskTableBody"),
-      btnReloadData: document.getElementById("btnReloadData")
+      taskTableBody: document.getElementById("taskTableBody")
     };
 
     let pageConfig = {
       title: "업무 마감 달력",
-      subtitle: "단일 HTML + 외부 JSON 관리",
-      lastUpdated: "",
-      manager: "",
-      guideLines: []
+      subtitle: "업무 일정 JSON 관리"
     };
     let tasks = [];
+    let dailyStatus = [];
     let filters = { ...DEFAULT_FILTERS };
     let selectedDate = todayKey();
-    let currentMonthDate = startOfMonth(parseLocalDate(selectedDate));
+    let currentMonthDate = startOfMonth(parseDateKey(selectedDate));
 
-    function parseLocalDate(dateString) {
-      if (!dateString) {
-        return new Date();
+    function parseDateTimeParts(value) {
+      const text = String(value || "").trim();
+      if (!text) return null;
+
+      const match = text.match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
+      if (!match) return null;
+
+      const [, yearText, monthText, dayText, hourText, minuteText, secondText] = match;
+      const year = Number(yearText);
+      const month = Number(monthText);
+      const day = Number(dayText);
+      const hour = Number(hourText || 12);
+      const minute = Number(minuteText || 0);
+      const second = Number(secondText || 0);
+      const date = new Date(year, month - 1, day, hour, minute, second, 0);
+
+      if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day ||
+        date.getHours() !== hour ||
+        date.getMinutes() !== minute
+      ) {
+        return null;
       }
-      const [year, month, day] = String(dateString).split("-").map(Number);
-      return new Date(year, (month || 1) - 1, day || 1, 12, 0, 0, 0);
+
+      return {
+        date,
+        dateKey: `${yearText}-${monthText}-${dayText}`,
+        timeText: hourText && minuteText ? `${hourText}:${minuteText}${secondText ? `:${secondText}` : ""}` : ""
+      };
+    }
+
+    function parseDateKey(dateKey) {
+      const parsed = parseDateTimeParts(dateKey);
+      return parsed?.date || new Date();
     }
 
     function formatDateKey(date) {
@@ -935,17 +1072,34 @@
       return new Date(date.getFullYear(), date.getMonth(), 1, 12, 0, 0, 0);
     }
 
-    function formatFullDate(dateString) {
-      const date = parseLocalDate(dateString);
+    function formatFullDate(dateKey) {
+      const parsed = parseDateTimeParts(dateKey);
+      if (!parsed) return "-";
+      const date = parsed.date;
       return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${WEEKDAYS[date.getDay()]})`;
     }
 
-    function formatShortDate(dateString) {
-      const date = parseLocalDate(dateString);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const day = String(date.getDate()).padStart(2, "0");
+    function formatShortDate(dateKey) {
+      const parsed = parseDateTimeParts(dateKey);
+      if (!parsed) return "-";
+      const year = parsed.date.getFullYear();
+      const month = String(parsed.date.getMonth() + 1).padStart(2, "0");
+      const day = String(parsed.date.getDate()).padStart(2, "0");
       return `${year}.${month}.${day}`;
+    }
+
+    function formatFullDueDate(dueDate) {
+      const parsed = parseDateTimeParts(dueDate);
+      if (!parsed) return String(dueDate || "").trim() || "-";
+      const dateLabel = formatFullDate(parsed.dateKey);
+      return parsed.timeText ? `${dateLabel} ${parsed.timeText}` : dateLabel;
+    }
+
+    function formatShortDueDate(dueDate) {
+      const parsed = parseDateTimeParts(dueDate);
+      if (!parsed) return String(dueDate || "").trim() || "-";
+      const dateLabel = formatShortDate(parsed.dateKey);
+      return parsed.timeText ? `${dateLabel} ${parsed.timeText}` : dateLabel;
     }
 
     function escapeHtml(value) {
@@ -976,39 +1130,115 @@
       return next;
     }
 
+    function displayText(value, fallback = "-") {
+      const text = String(value || "").trim();
+      return text || fallback;
+    }
+
+    function normalizePriority(value) {
+      const next = String(value || "").trim();
+      if (!next) return "";
+      return PRIORITY_OPTIONS.includes(next) ? next : (LEGACY_PRIORITY_MAP[next] || "");
+    }
+
+    function normalizeState(value) {
+      const next = String(value || "").trim();
+      if (!next) return "";
+      return STATE_OPTIONS.includes(next) ? next : (LEGACY_STATE_MAP[next] || "");
+    }
+
+    function isDoneState(state) {
+      return state === "완료" || state === "기한 지남(완료)";
+    }
+
+    function isOverdueState(state) {
+      return state === "기한 지남(미완료)" || state === "기한 지남(완료)";
+    }
+
+    function getPriorityToneClass(priority) {
+      switch (priority) {
+        case "높음(중요)":
+          return "high-important";
+        case "높음(급함)":
+          return "high-urgent";
+        case "보통":
+          return "medium";
+        case "낮음":
+          return "low";
+        default:
+          return "empty";
+      }
+    }
+
+    function getStateToneClass(state) {
+      switch (state) {
+        case "아직 시작 전":
+          return "not-started";
+        case "진행 중":
+          return "in-progress";
+        case "완료":
+          return "done";
+        case "기한 지남(미완료)":
+          return "overdue-open";
+        case "기한 지남(완료)":
+          return "overdue-done";
+        default:
+          return "empty";
+      }
+    }
+
     function normalizeTask(raw, index = 0) {
-      const dueDate = /^\d{4}-\d{2}-\d{2}$/.test(String(raw?.dueDate || ""))
-        ? String(raw.dueDate)
-        : todayKey();
-      const priority = ["high", "medium", "low"].includes(raw?.priority)
-        ? raw.priority
-        : "medium";
-      const state = ["todo", "doing", "hold", "done"].includes(raw?.state)
-        ? raw.state
-        : "todo";
+      const dueDate = String(raw?.dueDate || "").trim();
+      const parsedDueDate = parseDateTimeParts(dueDate);
 
       return {
         id: String(raw?.id || `task-${index + 1}`),
-        title: String(raw?.title || "제목 없는 업무").trim(),
+        title: String(raw?.title || "").trim(),
         dueDate,
-        category: String(raw?.category || "기타").trim() || "기타",
-        owner: String(raw?.owner || "미지정").trim() || "미지정",
-        priority,
-        state,
+        dueDateKey: parsedDueDate?.dateKey || "",
+        dueTime: parsedDueDate?.timeText || "",
+        category: String(raw?.category || "").trim(),
+        priority: normalizePriority(raw?.priority),
+        state: normalizeState(raw?.state),
         notes: String(raw?.notes || "").trim(),
-        link: normalizeUrl(raw?.link || "")
+        link: normalizeUrl(raw?.link || ""),
+        relatedDocuments: String(raw?.["관련 문서"] || raw?.relatedDocuments || raw?.relatedDocs || "").trim(),
+        officeManager: String(raw?.["청 담당자"] || raw?.officeManager || raw?.owner || "").trim(),
+        contact: String(raw?.["문의처"] || raw?.contact || "").trim(),
+        relatedDeptManager: String(raw?.["유관 부서 사업 담당자"] || raw?.relatedDeptManager || "").trim()
       };
     }
 
     function normalizePage(raw) {
       return {
         title: String(raw?.title || "업무 마감 달력").trim() || "업무 마감 달력",
-        subtitle: String(raw?.subtitle || "단일 HTML + 외부 JSON 관리").trim(),
-        lastUpdated: String(raw?.lastUpdated || "").trim(),
-        manager: String(raw?.manager || "").trim(),
-        guideLines: Array.isArray(raw?.guideLines)
-          ? raw.guideLines.map(item => String(item || "").trim()).filter(Boolean)
-          : []
+        subtitle: String(raw?.subtitle || "업무 일정 JSON 관리").trim() || "업무 일정 JSON 관리"
+      };
+    }
+
+    function normalizeDutyEntry(raw) {
+      return {
+        position: String(raw?.["직책(직급)"] || raw?.position || "").trim(),
+        dutyStatus: String(raw?.["복무 상태"] || raw?.dutyStatus || "").trim(),
+        absenceTime: String(raw?.["부재 시간"] || raw?.absenceTime || "").trim()
+      };
+    }
+
+    function normalizeDailyStatusItem(raw) {
+      const dateValue = String(raw?.date || raw?.날짜 || "").trim();
+      const parsedDate = parseDateTimeParts(dateValue);
+      const approvers = Array.isArray(raw?.["결재권자"] || raw?.approvers)
+        ? (raw["결재권자"] || raw.approvers).map(normalizeDutyEntry)
+        : [];
+      const projectManagers = Array.isArray(raw?.["사업담당자"] || raw?.projectManagers)
+        ? (raw["사업담당자"] || raw.projectManagers).map(normalizeDutyEntry)
+        : [];
+
+      return {
+        date: dateValue,
+        dateKey: parsedDate?.dateKey || "",
+        approvers,
+        projectManagers
       };
     }
 
@@ -1027,8 +1257,13 @@
         throw new Error("JSON 문법 오류가 있습니다. 큰따옴표, 쉼표, 날짜 형식을 확인해 주세요.");
       }
 
+      const rawDailyStatus = parsed?.dailyStatus ?? parsed?.dailyDutyStatus ?? parsed?.["일별 복무 현황"] ?? [];
+
       return {
         page: normalizePage(parsed?.page || {}),
+        dailyStatus: Array.isArray(rawDailyStatus)
+          ? rawDailyStatus.map(normalizeDailyStatusItem)
+          : [],
         tasks: Array.isArray(parsed?.tasks)
           ? parsed.tasks.map((item, index) => normalizeTask(item, index))
           : []
@@ -1043,59 +1278,126 @@
       return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth();
     }
 
-    function diffDays(fromDateString, toDateString) {
+    function diffDays(fromDateKey, toDateKey) {
+      const from = parseDateTimeParts(fromDateKey);
+      const to = parseDateTimeParts(toDateKey);
+      if (!from || !to) return null;
+
       const oneDay = 24 * 60 * 60 * 1000;
-      const from = parseLocalDate(fromDateString);
-      const to = parseLocalDate(toDateString);
-      return Math.round((to.getTime() - from.getTime()) / oneDay);
+      const fromBase = new Date(from.date.getFullYear(), from.date.getMonth(), from.date.getDate(), 12);
+      const toBase = new Date(to.date.getFullYear(), to.date.getMonth(), to.date.getDate(), 12);
+      return Math.round((toBase.getTime() - fromBase.getTime()) / oneDay);
+    }
+
+    function taskDueTimeValue(task) {
+      const parsed = parseDateTimeParts(task.dueDate);
+      return parsed ? parsed.date.getTime() : Number.POSITIVE_INFINITY;
+    }
+
+    function isTaskOverdue(task) {
+      if (isOverdueState(task.state) && !isDoneState(task.state)) {
+        return true;
+      }
+
+      if (!task.dueDateKey) {
+        return false;
+      }
+
+      const diff = diffDays(todayKey(), task.dueDateKey);
+      return diff !== null && diff < 0 && !isDoneState(task.state);
+    }
+
+    function isTaskUpcoming(task) {
+      if (!task.dueDateKey || isDoneState(task.state)) {
+        return false;
+      }
+
+      const diff = diffDays(todayKey(), task.dueDateKey);
+      return diff !== null && diff >= 0 && diff <= 7;
     }
 
     function getTaskDday(task) {
-      if (task.state === "done") {
-        return { label: "완료", className: "done" };
+      if (isDoneState(task.state)) {
+        return {
+          label: task.state === "기한 지남(완료)" ? "기한 후 완료" : "완료",
+          className: "done"
+        };
       }
 
-      const diff = diffDays(todayKey(), task.dueDate);
-      if (diff < 0) {
-        return { label: `D+${Math.abs(diff)}`, className: "overdue" };
+      if (task.dueDateKey) {
+        const diff = diffDays(todayKey(), task.dueDateKey);
+
+        if (diff !== null) {
+          if (diff < 0) {
+            return { label: `D+${Math.abs(diff)}`, className: "overdue" };
+          }
+          if (diff === 0) {
+            return { label: "D-Day", className: "soon" };
+          }
+          if (diff <= 7) {
+            return { label: `D-${diff}`, className: "soon" };
+          }
+          return { label: `D-${diff}`, className: "normal" };
+        }
       }
-      if (diff === 0) {
-        return { label: "D-Day", className: "soon" };
+
+      if (task.state === "기한 지남(미완료)") {
+        return { label: "기한 지남", className: "overdue" };
       }
-      if (diff <= 7) {
-        return { label: `D-${diff}`, className: "soon" };
-      }
-      return { label: `D-${diff}`, className: "normal" };
+
+      return { label: "-", className: "normal" };
     }
 
     function compareTasks(a, b) {
-      const aDone = a.state === "done" ? 1 : 0;
-      const bDone = b.state === "done" ? 1 : 0;
+      const aDone = isDoneState(a.state) ? 1 : 0;
+      const bDone = isDoneState(b.state) ? 1 : 0;
       if (aDone !== bDone) return aDone - bDone;
 
-      const dateGap = parseLocalDate(a.dueDate).getTime() - parseLocalDate(b.dueDate).getTime();
-      if (dateGap !== 0) return dateGap;
+      const aMissingDate = a.dueDateKey ? 0 : 1;
+      const bMissingDate = b.dueDateKey ? 0 : 1;
+      if (aMissingDate !== bMissingDate) return aMissingDate - bMissingDate;
 
-      const priorityGap = PRIORITY_RANK[a.priority] - PRIORITY_RANK[b.priority];
+      const dateGap = taskDueTimeValue(a) - taskDueTimeValue(b);
+      if (Number.isFinite(dateGap) && dateGap !== 0) return dateGap;
+
+      const priorityGap = (PRIORITY_ORDER[a.priority] ?? 99) - (PRIORITY_ORDER[b.priority] ?? 99);
       if (priorityGap !== 0) return priorityGap;
 
-      return a.title.localeCompare(b.title, "ko");
+      return displayText(a.title, "제목 미입력").localeCompare(displayText(b.title, "제목 미입력"), "ko");
     }
 
-    function findBestFocusDate(nextTasks) {
+    function findBestFocusDate(nextTasks, nextDailyStatus) {
       const today = todayKey();
-      if (nextTasks.some(task => task.dueDate === today)) {
+      if (nextTasks.some(task => task.dueDateKey === today)) {
         return today;
       }
-      const nearest = nextTasks.slice().sort(compareTasks)[0];
-      return nearest?.dueDate || today;
+      if (nextDailyStatus.some(item => item.dateKey === today)) {
+        return today;
+      }
+
+      const nearestTask = nextTasks.filter(task => task.dueDateKey).slice().sort(compareTasks)[0];
+      if (nearestTask?.dueDateKey) {
+        return nearestTask.dueDateKey;
+      }
+
+      const firstStatusDate = nextDailyStatus.find(item => item.dateKey)?.dateKey;
+      return firstStatusDate || today;
     }
 
     function getFilteredTasks() {
       return tasks.filter(task => {
         const keyword = filters.keyword.trim().toLowerCase();
         if (keyword) {
-          const target = [task.title, task.notes, task.category, task.owner].join(" ").toLowerCase();
+          const target = [
+            task.title,
+            task.notes,
+            task.category,
+            task.officeManager,
+            task.contact,
+            task.relatedDeptManager,
+            task.relatedDocuments,
+            task.dueDate
+          ].join(" ").toLowerCase();
           if (!target.includes(keyword)) {
             return false;
           }
@@ -1109,25 +1411,28 @@
           return false;
         }
 
-        if (filters.owner !== "all" && task.owner !== filters.owner) {
+        if (filters.manager !== "all" && task.officeManager !== filters.manager) {
           return false;
         }
 
         if (filters.state !== "all") {
           if (filters.state === "open") {
-            if (task.state === "done") return false;
+            if (isDoneState(task.state)) return false;
           } else if (task.state !== filters.state) {
             return false;
           }
         }
 
-        if (filters.hideDone && task.state === "done") {
+        if (filters.hideDone && isDoneState(task.state)) {
           return false;
         }
 
         if (filters.urgentOnly) {
-          const diff = diffDays(todayKey(), task.dueDate);
-          if (task.state === "done" || diff > 7) {
+          if (isDoneState(task.state)) {
+            return false;
+          }
+
+          if (!isTaskOverdue(task) && !isTaskUpcoming(task)) {
             return false;
           }
         }
@@ -1137,7 +1442,7 @@
     }
 
     function getVisibleTasksOnDate(dateKey, filteredTasks) {
-      return filteredTasks.filter(task => task.dueDate === dateKey).slice().sort(compareTasks);
+      return filteredTasks.filter(task => task.dueDateKey === dateKey).slice().sort(compareTasks);
     }
 
     function setSelectOptions(selectEl, options, currentValue) {
@@ -1152,10 +1457,10 @@
 
     function renderOptionLists() {
       const categories = uniqueSorted(tasks.map(task => task.category));
-      const owners = uniqueSorted(tasks.map(task => task.owner));
+      const managers = uniqueSorted(tasks.map(task => task.officeManager));
 
       filters.category = setSelectOptions(els.categoryFilter, categories, filters.category);
-      filters.owner = setSelectOptions(els.ownerFilter, owners, filters.owner);
+      filters.manager = setSelectOptions(els.managerFilter, managers, filters.manager);
     }
 
     function createSummaryCard(label, value, help) {
@@ -1170,36 +1475,35 @@
 
     function renderHeader() {
       els.pageTitle.textContent = pageConfig.title;
-      els.pageSubtitle.textContent = pageConfig.subtitle || "단일 HTML + 외부 JSON 관리";
+      els.pageSubtitle.textContent = pageConfig.subtitle;
       els.dataFilePath.textContent = DATA_URL;
 
       const metaParts = [
         `오늘: ${formatFullDate(todayKey())}`,
-        pageConfig.lastUpdated ? `마지막 반영: ${pageConfig.lastUpdated}` : "",
-        pageConfig.manager ? `개발자: ${pageConfig.manager}` : "",
         `JSON: ${DATA_URL}`
-      ].filter(Boolean);
+      ];
       els.pageMeta.textContent = metaParts.join(" · ");
       document.title = pageConfig.title;
 
-      const guideItems = pageConfig.guideLines.length
-        ? pageConfig.guideLines
-        : ["GitHub에서는 JSON 파일만 수정하면 달력과 표가 자동 반영됩니다."];
+      const guideItems = [
+        "JSON 항목은 모두 선택 입력입니다. 값을 비워두어도 불러오기 오류가 나지 않습니다.",
+        "업무 일정과 일별 복무 현황은 같은 JSON 파일에서 함께 관리할 수 있습니다."
+      ];
       els.guideList.innerHTML = guideItems.map(line => `<li>${escapeHtml(line)}</li>`).join("");
     }
 
     function renderSummary(filteredTasks) {
       const total = tasks.length;
-      const completed = tasks.filter(task => task.state === "done").length;
-      const openCount = tasks.filter(task => task.state !== "done").length;
-      const overdue = tasks.filter(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) < 0).length;
-      const upcoming = tasks.filter(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) >= 0 && diffDays(todayKey(), task.dueDate) <= 7).length;
+      const completed = tasks.filter(task => isDoneState(task.state)).length;
+      const openCount = tasks.filter(task => !isDoneState(task.state)).length;
+      const overdue = tasks.filter(task => isTaskOverdue(task)).length;
+      const upcoming = tasks.filter(task => isTaskUpcoming(task)).length;
 
       els.summaryGrid.innerHTML = [
         createSummaryCard("전체 업무", `${total}건`, "JSON에 등록된 총 업무 수"),
-        createSummaryCard("미완료", `${openCount}건`, "할 일 + 진행 중 + 보류"),
+        createSummaryCard("미완료", `${openCount}건`, "아직 시작 전 + 진행 중 + 기한 지남(미완료)"),
         createSummaryCard("7일 이내", `${upcoming}건`, "오늘 포함 임박 일정"),
-        createSummaryCard("지연", `${overdue}건`, "마감일이 지난 업무"),
+        createSummaryCard("기한 지남", `${overdue}건`, "미완료 기준"),
         createSummaryCard("완료", `${completed}건`, `현재 필터 결과 ${filteredTasks.length}건`)
       ].join("");
 
@@ -1213,8 +1517,11 @@
       calendarStart.setDate(monthStart.getDate() - monthStart.getDay());
 
       const tasksByDate = filteredTasks.reduce((acc, task) => {
-        acc[task.dueDate] = acc[task.dueDate] || [];
-        acc[task.dueDate].push(task);
+        if (!task.dueDateKey) {
+          return acc;
+        }
+        acc[task.dueDateKey] = acc[task.dueDateKey] || [];
+        acc[task.dueDateKey].push(task);
         return acc;
       }, {});
 
@@ -1224,17 +1531,19 @@
         date.setDate(calendarStart.getDate() + i);
         const dateKey = formatDateKey(date);
         const dayTasks = (tasksByDate[dateKey] || []).slice().sort(compareTasks);
+
         const preview = dayTasks.slice(0, 3).map(task => {
-          const prefix = task.state === "done" ? "✓ " : "";
+          const prefix = task.dueTime ? `[${task.dueTime}] ` : "";
+          const donePrefix = isDoneState(task.state) ? "✓ " : "";
           return `
-            <span class="calendar-task-chip priority-${task.priority}${task.state === "done" ? " is-done" : ""}" title="${escapeHtml(task.title)}">
-              ${escapeHtml(prefix + task.title)}
+            <span class="calendar-task-chip priority-${getPriorityToneClass(task.priority)}${isDoneState(task.state) ? " is-done" : ""}" title="${escapeHtml(displayText(task.title, "제목 미입력"))}">
+              ${escapeHtml(`${donePrefix}${prefix}${displayText(task.title, "제목 미입력")}`)}
             </span>
           `;
         }).join("");
 
         const extraCount = dayTasks.length > 3 ? `<div class="more-chip">+${dayTasks.length - 3}건 더 보기</div>` : "";
-        const hasOverdue = dayTasks.some(task => task.state !== "done" && diffDays(todayKey(), task.dueDate) < 0);
+        const hasOverdue = dayTasks.some(task => isTaskOverdue(task));
         const classes = [
           "calendar-day",
           isSameMonth(date, monthStart) ? "" : "is-other-month",
@@ -1263,40 +1572,66 @@
       els.monthLabel.textContent = `${monthStart.getFullYear()}년 ${monthStart.getMonth() + 1}월 · ${formatShortDate(formatDateKey(monthStart))} ~ ${formatShortDate(formatDateKey(monthEnd))}`;
     }
 
+    function detailBoxHtml(label, value) {
+      const text = String(value || "").trim();
+      if (!text) return "";
+      return `
+        <div class="detail-box">
+          <strong>${escapeHtml(label)}</strong>
+          <div>${nl2br(text)}</div>
+        </div>
+      `;
+    }
+
     function taskCardHtml(task) {
       const dday = getTaskDday(task);
-      const noteHtml = task.notes
-        ? `<p class="task-note">${nl2br(task.notes)}</p>`
-        : "";
+      const priorityClass = getPriorityToneClass(task.priority);
+      const stateClass = getStateToneClass(task.state);
       const linkHtml = task.link
-        ? `<a class="btn pastel-blue task-link" href="${escapeHtml(task.link)}" target="_blank" rel="noopener">관련 링크</a>`
+        ? `<a class="btn pastel-blue task-link" href="${escapeHtml(task.link)}" target="_blank" rel="noopener">관련 링크 열기</a>`
         : "";
 
       return `
-        <article class="task-card${task.state === "done" ? " is-done" : ""}">
+        <article class="task-card${isDoneState(task.state) ? " is-done" : ""}">
           <div class="task-head">
             <div>
-              <h3 class="task-title">${escapeHtml(task.title)}</h3>
+              <h3 class="task-title">${escapeHtml(displayText(task.title, "제목 미입력"))}</h3>
               <div class="task-badges">
-                <span class="badge priority-${task.priority}">${PRIORITY_LABEL[task.priority]}</span>
-                <span class="badge state-${task.state}">${STATE_LABEL[task.state]}</span>
-                <span class="badge ${dday.className === "done" ? "state-done" : dday.className === "overdue" ? "priority-high" : dday.className === "soon" ? "priority-medium" : "priority-low"}">${dday.label}</span>
+                <span class="badge priority-${priorityClass}">${escapeHtml(displayText(task.priority))}</span>
+                <span class="badge state-${stateClass}">${escapeHtml(displayText(task.state))}</span>
+                <span class="badge ${dday.className === "done" ? "state-done" : dday.className === "overdue" ? "state-overdue-open" : dday.className === "soon" ? "priority-medium" : "priority-low"}">${dday.label}</span>
               </div>
             </div>
           </div>
 
           <div class="task-meta">
             <div class="meta-item">
-              <span class="meta-label">마감일</span>
-              <span class="meta-value">${formatFullDate(task.dueDate)}</span>
+              <span class="meta-label">마감일시</span>
+              <span class="meta-value">${escapeHtml(formatFullDueDate(task.dueDate))}</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">분류</span>
-              <span class="meta-value">${escapeHtml(task.category)}</span>
+              <span class="meta-value">${escapeHtml(displayText(task.category))}</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label">담당</span>
-              <span class="meta-value">${escapeHtml(task.owner)}</span>
+              <span class="meta-label">청 담당자</span>
+              <span class="meta-value">${escapeHtml(displayText(task.officeManager))}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">문의처</span>
+              <span class="meta-value">${escapeHtml(displayText(task.contact))}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">유관 부서 사업 담당자</span>
+              <span class="meta-value">${escapeHtml(displayText(task.relatedDeptManager))}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">우선순위</span>
+              <span class="meta-value">${escapeHtml(displayText(task.priority))}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">상태</span>
+              <span class="meta-value">${escapeHtml(displayText(task.state))}</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">마감상태</span>
@@ -1304,16 +1639,67 @@
             </div>
           </div>
 
-          ${noteHtml}
+          ${detailBoxHtml("비고", task.notes)}
+          ${detailBoxHtml("관련 문서", task.relatedDocuments)}
           ${linkHtml}
         </article>
       `;
     }
 
+    function getDailyStatusForDate(dateKey) {
+      return dailyStatus.find(item => item.dateKey === dateKey) || null;
+    }
+
+    function hasDutyEntryData(entry) {
+      return Boolean(entry?.position || entry?.dutyStatus || entry?.absenceTime);
+    }
+
+    function countDutyEntries(statusItem) {
+      if (!statusItem) return 0;
+      return [...statusItem.approvers, ...statusItem.projectManagers].filter(hasDutyEntryData).length;
+    }
+
+    function renderDutyEntryList(entries, emptyMessage) {
+      const validEntries = (entries || []).filter(hasDutyEntryData);
+      if (!validEntries.length) {
+        return `<div class="attendance-empty">${escapeHtml(emptyMessage)}</div>`;
+      }
+
+      return validEntries.map(entry => `
+        <div class="attendance-item">
+          <div>
+            <span class="meta-label">직책(직급)</span>
+            <div class="meta-value">${escapeHtml(displayText(entry.position))}</div>
+          </div>
+          <div>
+            <span class="meta-label">복무 상태</span>
+            <div class="meta-value">${escapeHtml(displayText(entry.dutyStatus))}</div>
+          </div>
+          <div>
+            <span class="meta-label">부재 시간</span>
+            <div class="meta-value">${escapeHtml(displayText(entry.absenceTime))}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
     function renderSelectedDay(filteredTasks) {
       const selectedTasks = getVisibleTasksOnDate(selectedDate, filteredTasks);
-      els.selectedDateLabel.textContent = `${formatFullDate(selectedDate)} 업무`;
-      els.selectedDateHelp.textContent = `현재 필터 기준 ${selectedTasks.length}건 표시`;
+      const statusItem = getDailyStatusForDate(selectedDate);
+      const dutyCount = countDutyEntries(statusItem);
+
+      els.selectedDateLabel.textContent = `${formatFullDate(selectedDate)} 업무 목록`;
+      els.selectedDateHelp.textContent = `현재 필터 기준 업무 ${selectedTasks.length}건${dutyCount ? ` · 복무 현황 ${dutyCount}건 등록` : ""}`;
+
+      if (statusItem) {
+        els.dailyStatusBox.hidden = false;
+        els.approverStatusList.innerHTML = renderDutyEntryList(statusItem.approvers, "등록된 결재권자 복무 현황이 없습니다.");
+        els.projectStatusList.innerHTML = renderDutyEntryList(statusItem.projectManagers, "등록된 사업담당자 복무 현황이 없습니다.");
+      } else {
+        els.dailyStatusBox.hidden = true;
+        els.approverStatusList.innerHTML = "";
+        els.projectStatusList.innerHTML = "";
+      }
 
       if (!selectedTasks.length) {
         els.selectedDayEmpty.hidden = false;
@@ -1327,7 +1713,7 @@
 
     function renderUpcoming(filteredTasks) {
       const upcomingTasks = filteredTasks
-        .filter(task => task.state !== "done")
+        .filter(task => !isDoneState(task.state) && (task.dueDateKey || isTaskOverdue(task)))
         .slice()
         .sort(compareTasks)
         .slice(0, 8);
@@ -1345,12 +1731,12 @@
         const dday = getTaskDday(task);
         return `
           <tr>
-            <td>${formatShortDate(task.dueDate)}</td>
+            <td>${escapeHtml(formatShortDueDate(task.dueDate))}</td>
             <td><span class="status-text ${dday.className}">${dday.label}</span></td>
-            <td class="title-cell">${escapeHtml(task.title)}</td>
-            <td>${escapeHtml(task.category)}</td>
-            <td>${escapeHtml(task.owner)}</td>
-            <td>${STATE_LABEL[task.state]}</td>
+            <td class="title-cell">${escapeHtml(displayText(task.title, "제목 미입력"))}</td>
+            <td>${escapeHtml(displayText(task.category))}</td>
+            <td>${escapeHtml(displayText(task.officeManager))}</td>
+            <td>${escapeHtml(displayText(task.state))}</td>
           </tr>
         `;
       }).join("");
@@ -1372,13 +1758,13 @@
         .map(task => {
           const dday = getTaskDday(task);
           return `
-            <tr class="${task.state === "done" ? "table-row-done" : ""}">
-              <td>${formatShortDate(task.dueDate)}</td>
-              <td class="title-cell">${escapeHtml(task.title)}</td>
-              <td>${escapeHtml(task.category)}</td>
-              <td>${escapeHtml(task.owner)}</td>
-              <td>${PRIORITY_LABEL[task.priority]}</td>
-              <td>${STATE_LABEL[task.state]}</td>
+            <tr class="${isDoneState(task.state) ? "table-row-done" : ""}">
+              <td>${escapeHtml(formatShortDueDate(task.dueDate))}</td>
+              <td class="title-cell">${escapeHtml(displayText(task.title, "제목 미입력"))}</td>
+              <td>${escapeHtml(displayText(task.category))}</td>
+              <td>${escapeHtml(displayText(task.officeManager))}</td>
+              <td>${escapeHtml(displayText(task.priority))}</td>
+              <td>${escapeHtml(displayText(task.state))}</td>
               <td><span class="status-text ${dday.className}">${dday.label}</span></td>
             </tr>
           `;
@@ -1402,7 +1788,7 @@
       els.categoryFilter.value = "all";
       els.priorityFilter.value = "all";
       els.stateFilter.value = "all";
-      els.ownerFilter.value = "all";
+      els.managerFilter.value = "all";
       els.urgentOnlyInput.checked = false;
       els.hideDoneInput.checked = false;
       renderAll();
@@ -1413,15 +1799,18 @@
       filters.category = els.categoryFilter.value || "all";
       filters.priority = els.priorityFilter.value || "all";
       filters.state = els.stateFilter.value || "all";
-      filters.owner = els.ownerFilter.value || "all";
+      filters.manager = els.managerFilter.value || "all";
       filters.urgentOnly = els.urgentOnlyInput.checked;
       filters.hideDone = els.hideDoneInput.checked;
       renderAll();
     }
 
     function focusDate(dateKey) {
+      if (!parseDateTimeParts(dateKey)) {
+        return;
+      }
       selectedDate = dateKey;
-      currentMonthDate = startOfMonth(parseLocalDate(dateKey));
+      currentMonthDate = startOfMonth(parseDateKey(dateKey));
       renderAll();
     }
 
@@ -1429,7 +1818,7 @@
       const next = new Date(currentMonthDate);
       next.setMonth(next.getMonth() + offset, 1);
       currentMonthDate = startOfMonth(next);
-      if (!isSameMonth(parseLocalDate(selectedDate), currentMonthDate)) {
+      if (!isSameMonth(parseDateKey(selectedDate), currentMonthDate)) {
         selectedDate = formatDateKey(currentMonthDate);
       }
       renderAll();
@@ -1452,42 +1841,35 @@
       els.fatalErrorBox.innerHTML = "";
     }
 
-    function setLoading(isLoading) {
-      els.btnReloadData.disabled = isLoading;
-      els.btnReloadData.textContent = isLoading ? "불러오는 중..." : "데이터 다시 불러오기";
-    }
-
     async function refreshData({ preserveSelected = true } = {}) {
       hideFatalError();
-      setLoading(true);
+      els.pageMeta.textContent = "데이터를 불러오는 중입니다.";
 
       try {
         const loaded = await loadRemoteData();
         const previousSelectedDate = selectedDate;
         pageConfig = loaded.page;
         tasks = loaded.tasks;
+        dailyStatus = loaded.dailyStatus;
 
-        if (preserveSelected && tasks.some(task => task.dueDate === previousSelectedDate)) {
+        if (
+          preserveSelected &&
+          (tasks.some(task => task.dueDateKey === previousSelectedDate) || dailyStatus.some(item => item.dateKey === previousSelectedDate))
+        ) {
           selectedDate = previousSelectedDate;
         } else {
-          selectedDate = findBestFocusDate(tasks);
+          selectedDate = findBestFocusDate(tasks, dailyStatus);
         }
 
-        currentMonthDate = startOfMonth(parseLocalDate(selectedDate));
+        currentMonthDate = startOfMonth(parseDateKey(selectedDate));
         renderAll();
       } catch (error) {
         showFatalError(error?.message || "알 수 없는 오류가 발생했습니다.");
-      } finally {
-        setLoading(false);
       }
     }
 
     function bindEvents() {
-      document.getElementById("btnReloadData").addEventListener("click", () => {
-        refreshData({ preserveSelected: true });
-      });
       document.getElementById("btnTodayFocus").addEventListener("click", () => focusDate(todayKey()));
-      document.getElementById("btnThisMonth").addEventListener("click", () => focusDate(todayKey()));
       document.getElementById("btnPrevMonth").addEventListener("click", () => shiftMonth(-1));
       document.getElementById("btnNextMonth").addEventListener("click", () => shiftMonth(1));
       document.getElementById("btnResetFilters").addEventListener("click", resetFilters);
@@ -1497,7 +1879,7 @@
         els.categoryFilter,
         els.priorityFilter,
         els.stateFilter,
-        els.ownerFilter,
+        els.managerFilter,
         els.urgentOnlyInput,
         els.hideDoneInput
       ].forEach(element => {
