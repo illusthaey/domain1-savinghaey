@@ -1,11 +1,11 @@
 {
   "page": {
-    "title": "업무 마감 달력",
-    "subtitle": "HTML + JSON 분리형 · GitHub 업로드용",
-    "lastUpdated": "2026-04-10 13:00",
-    "manager": "행정실",
+    "title": "2026회계 업무 마감 달력",
+    "subtitle": "업무천재 고주무관",
+    "lastUpdated": "2026-04-12 05:17",
+    "manager": "고주무관",
     "guideLines": [
-      "JSON만 수정하면 됩니다."
+      "내 인생은 내가 개척한다"
     ]
   },
   "tasks": [
