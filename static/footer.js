@@ -19,7 +19,7 @@
   // 0) 테마(레트로/깔끔) — 로컬 저장
   // -----------------------------
   const THEME_KEY = "edu_theme";
-  const DEFAULT_THEME = "classic"; // 기본값: 깔끔
+  const DEFAULT_THEME = "retro"; // 기본값: 레트로
 
   function normalizeTheme(t) {
     return t === "classic" || t === "retro" ? t : DEFAULT_THEME;
